@@ -1,0 +1,19 @@
+server:
+  port: 8081
+
+
+
+spring:
+  #数据库连接
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(5x30WNLtdRCpAQdv3Otu0WFYWu7oy8GJ4GgA2PSvE+ijMsSgF5xqPjkAIyi/H99DV6lLkdwl9ZMlkhkV4pce11H5fVnZ34YpZqtGZkfTqlLMJXfggVRFy8zLkn1MgsgUCFbddU1UP4cQYaEAhTokuxQ+EXbDbBaQH5iIKZAjrPlLehPFBIlzCw==)
+    username: ENC(u8urMeaoOrS3kTyI6G140A6n4OUbLNFL)
+    password: ENC(fB55Vo5yN1moCRIm/gBn5AxjQbDWu8NK)
+# 加密工具
+#jasypt:
+#  encryptor:
+#    # 在生产环境中，建议使用如下方式配置密钥，避免密钥泄露
+#    password: huxinzhi # java -jar -Djasypt.encryptor.password=huxinzhi
+#    algorithm: PBEWithMD5AndDES
+#    iv-generator-classname: org.jasypt.iv.NoIvGenerator
