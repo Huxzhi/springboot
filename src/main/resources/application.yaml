@@ -16,9 +16,13 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml # 扫描所有mybatis的xml文件
   #  config-location: classpath:mybatis/mybatis-config.xml  #全局配置文件位置
+#  configuration:  #被 mybatis-plus 管理
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #日志
+#    map-underscore-to-camel-case: true # 开启驼峰命名自动映射，即从经典数据库列名 A_COLUMN 映射到经典 Java 属性名 aColumn。
+
+mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #日志
-    map-underscore-to-camel-case: true # 开启驼峰命名自动映射，即从经典数据库列名 A_COLUMN 映射到经典 Java 属性名 aColumn。
 
 # 加密工具（换成java类了，生成一个 jasyptStringEncryptor 组件放入SpringBoot中，在配置类中 JasyptConfig.java）
 #jasypt:
