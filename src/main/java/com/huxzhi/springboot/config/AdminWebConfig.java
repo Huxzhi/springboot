@@ -2,7 +2,9 @@ package com.huxzhi.springboot.config;
 
 
 import com.huxzhi.springboot.interceptor.LoginInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -13,8 +15,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * 3、指定拦截规则【如果是拦截所有，静态资源也会被拦截】
  */
 @EnableWebMvc
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class AdminWebConfig implements WebMvcConfigurer {
+
+    @Bean
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+        HiddenHttpMethodFilter methodFilter = new HiddenHttpMethodFilter();
+        methodFilter.setMethodParam("_m");
+        return methodFilter;
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor())
