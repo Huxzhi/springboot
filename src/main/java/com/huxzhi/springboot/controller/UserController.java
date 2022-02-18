@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/user")
+@RequestMapping("/user") //统一前缀 /user
 @RestController // 等价于@ResponseBody + @Controller。
 public class UserController {
 
@@ -35,6 +35,11 @@ public class UserController {
     @DeleteMapping("/{id}")
     public boolean deleteUser(@PathVariable Integer id) {
         return userService.removeById(id);
+    }
+
+    @PostMapping("/del/batch")
+    public boolean deleteBatchUsers(@RequestBody List<Integer> ids) {
+        return userService.removeByIds(ids);
     }
 
 
@@ -62,7 +67,7 @@ public class UserController {
     public IPage<User> findPageUsers(@RequestParam Integer pageNum,
                                      @RequestParam Integer pageSize,
                                      @RequestParam(defaultValue = "") String username,
-                                     @RequestParam(defaultValue = "") String nickname,
+                                     @RequestParam(defaultValue = "") String email,
                                      @RequestParam(defaultValue = "") String address) {
         IPage<User> page = new Page<>(pageNum, pageSize);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -72,14 +77,15 @@ public class UserController {
         if (!"".equals(username)) {
             queryWrapper.like("username", username);
         }
-        if (!"".equals(nickname)) {
-            queryWrapper.like("nickname", nickname);
+        if (!"".equals(email)) {
+            queryWrapper.like("email", email);
         }
         if (!"".equals(address)) {
             queryWrapper.like("address", address);
         }
 
-
+        //进行倒序输出
+        queryWrapper.orderByDesc("id");
         return userService.page(page, queryWrapper);
 
     }
