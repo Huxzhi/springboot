@@ -1,4 +1,4 @@
-package com.huxzhi.springboot.service.Ipml;
+package com.huxzhi.springboot.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.huxzhi.springboot.bean.User;

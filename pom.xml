@@ -32,6 +32,20 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.1</version>
         </dependency>
+        <!-- mybatis-plus 代码生成器-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+        <!-- 代码生成器 的模版引擎
+        https://mvnrepository.com/artifact/org.apache.velocity/velocity -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+        </dependency>
+
 
         <!-- API接口swagger3-->
         <dependency>
