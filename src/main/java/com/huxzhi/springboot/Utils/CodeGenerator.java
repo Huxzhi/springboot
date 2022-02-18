@@ -26,10 +26,15 @@ public class CodeGenerator {
                 })
                 .packageConfig(builder -> {
                     builder.parent("com.huxzhi.springboot") // 设置父包名
-                            .moduleName("") // 设置父包模块名
+                            .moduleName(null) // 设置父包模块名
                             .pathInfo(Collections.singletonMap(OutputFile.mapperXml, "/Users/huxinzhi/Developer/GitHub/Graduation-Design/springboot/src/main/resources/mapper/")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
+
+                    builder.entityBuilder().enableLombok(); //开启 Lombok
+                    builder.mapperBuilder().enableMapperAnnotation().build(); //开启 @Mapper 注解
+                    builder.controllerBuilder().enableHyphenStyle() //开启驼峰转连字符
+                            .enableRestStyle(); //开启生成@RestController 控制器
                     builder.addInclude("sys_user") // 设置需要生成的表名
                             .addTablePrefix("t_", "sys_"); // 设置过滤表前缀
                 })

@@ -1,79 +1,66 @@
 package com.huxzhi.springboot.controller;
 
+//导入需要的包
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.huxzhi.springboot.bean.User;
-import com.huxzhi.springboot.service.impl.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.huxzhi.springboot.entity.User;
+import com.huxzhi.springboot.service.IUserService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
-@RequestMapping("/user") //统一前缀 /user
-@RestController // 等价于@ResponseBody + @Controller。
+/**
+ * <p>
+ * 前端控制器
+ * </p>
+ *
+ * @author huxzhi
+ * @since 2022-02-18
+ */
+@RestController
+@RequestMapping("/user")
 public class UserController {
 
-//    @Autowired
-//    private UserMapper userMapper;
+    @Resource
+    private IUserService userService;
 
-    @Autowired
-    private UserServiceImpl userService;
-
-    //查询所有数据
-    @GetMapping
-    public List<User> findAllUsers() {
-        return userService.list();
-    }
-
+    //新增或者更新
     @PostMapping
-    public Boolean saveUser(@RequestBody User user) {
-        //新增或者更新
-        return userService.userSave(user);
+    public boolean save(@RequestBody User user) {
+        return userService.saveOrUpdate(user);
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteUser(@PathVariable Integer id) {
+    public boolean delete(@PathVariable Integer id) {
         return userService.removeById(id);
     }
 
     @PostMapping("/del/batch")
-    public boolean deleteBatchUsers(@RequestBody List<Integer> ids) {
+    public boolean deleteBatch(@RequestBody List<Integer> ids) {
         return userService.removeByIds(ids);
     }
 
+    //查询所有数据
+    @GetMapping
+    public List<User> findAll() {
+        return userService.list();
+    }
 
-    //分页查询
-    //接口路径：/user/page
-    //@RequestParam 接受 ?pageNum=1&pageSize=10
-//    @GetMapping("/page")
-//    public Map<String, Object> findPageUsers(@RequestParam Integer pageNum,
-//                                             @RequestParam Integer pageSize,
-//                                             @RequestParam String username) {
-//        pageNum = (pageNum - 1) * pageSize;
-//
-//        List<User> dataUser = userMapper.selectPageUsers(pageNum, pageSize, username);
-//        Integer totalUser = userMapper.selectTotalUser(username);
-//
-//        Map<String, Object> res = new HashMap<>();
-//        res.put("data", dataUser);
-//        res.put("total", totalUser);
-//
-//        return res;
-//    }
+    @GetMapping("/{id}")
+    public User findOne(@PathVariable Integer id) {
+        return userService.getById(id);
+    }
 
-    //分页查询 - mybatis-plus的方式
     @GetMapping("/page")
-    public IPage<User> findPageUsers(@RequestParam Integer pageNum,
-                                     @RequestParam Integer pageSize,
-                                     @RequestParam(defaultValue = "") String username,
-                                     @RequestParam(defaultValue = "") String email,
-                                     @RequestParam(defaultValue = "") String address) {
-        IPage<User> page = new Page<>(pageNum, pageSize);
+    public Page<User> findPage(@RequestParam Integer pageNum,
+                               @RequestParam Integer pageSize,
+                               @RequestParam(defaultValue = "") String username,
+                               @RequestParam(defaultValue = "") String email,
+                               @RequestParam(defaultValue = "") String address) {
+
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-
-        // queryWrapper.or().like("address", address); //错误的写法，会导致前面的条件全部失效
-
         if (!"".equals(username)) {
             queryWrapper.like("username", username);
         }
@@ -86,12 +73,8 @@ public class UserController {
 
         //进行倒序输出
         queryWrapper.orderByDesc("id");
-        return userService.page(page, queryWrapper);
 
+        return userService.page(new Page<>(pageNum, pageSize), queryWrapper);
     }
-
-//    @PutMapping
-//    public String putUser() {
-//        return "PUT-张三";
-//    }
 }
+
