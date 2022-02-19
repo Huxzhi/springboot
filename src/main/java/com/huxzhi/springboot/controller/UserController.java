@@ -36,6 +36,9 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+//    @Value("${files.upload.path}")
+//    private String filesUploadPath;
+
     @Resource
     private IUserService userService;
 
@@ -50,7 +53,6 @@ public class UserController {
         return Result.success(dto);
     }
 
-
     @PostMapping("/register")
     public Result register(@RequestBody UserDTO userDTO) {
         String username = userDTO.getUsername();
@@ -61,6 +63,42 @@ public class UserController {
         return Result.success(userService.register(userDTO));
     }
 
+    // 新增或者更新
+    @PostMapping
+    public Result save(@RequestBody User user) {
+        return Result.success(userService.saveOrUpdate(user));
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param userPasswordDTO
+     * @return
+     */
+//    @PostMapping("/password")
+//    public Result password(@RequestBody UserPasswordDTO userPasswordDTO) {
+//        userService.updatePassword(userPasswordDTO);
+//        return Result.success();
+//    }
+    @DeleteMapping("/{id}")
+    public Result delete(@PathVariable Integer id) {
+        return Result.success(userService.removeById(id));
+    }
+
+    @PostMapping("/del/batch")
+    public Result deleteBatch(@RequestBody List<Integer> ids) {
+        return Result.success(userService.removeByIds(ids));
+    }
+
+    @GetMapping
+    public Result findAll() {
+        return Result.success(userService.list());
+    }
+
+    @GetMapping("/{id}")
+    public Result findOne(@PathVariable Integer id) {
+        return Result.success(userService.getById(id));
+    }
 
     @GetMapping("/username/{username}")
     public Result findByUsername(@PathVariable String username) {
@@ -69,41 +107,15 @@ public class UserController {
         return Result.success(userService.getOne(queryWrapper));
     }
 
-    //新增或者更新
-    @PostMapping
-    public boolean save(@RequestBody User user) {
-        return userService.saveOrUpdate(user);
-    }
-
-    @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable Integer id) {
-        return userService.removeById(id);
-    }
-
-    @PostMapping("/del/batch")
-    public boolean deleteBatch(@RequestBody List<Integer> ids) {
-        return userService.removeByIds(ids);
-    }
-
-    //查询所有数据
-    @GetMapping
-    public List<User> findAll() {
-        return userService.list();
-    }
-
-    @GetMapping("/{id}")
-    public User findOne(@PathVariable Integer id) {
-        return userService.getById(id);
-    }
-
     @GetMapping("/page")
-    public Page<User> findPage(@RequestParam Integer pageNum,
-                               @RequestParam Integer pageSize,
-                               @RequestParam(defaultValue = "") String username,
-                               @RequestParam(defaultValue = "") String email,
-                               @RequestParam(defaultValue = "") String address) {
+    public Result findPage(@RequestParam Integer pageNum,
+                           @RequestParam Integer pageSize,
+                           @RequestParam(defaultValue = "") String username,
+                           @RequestParam(defaultValue = "") String email,
+                           @RequestParam(defaultValue = "") String address) {
 
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("id");
         if (!"".equals(username)) {
             queryWrapper.like("username", username);
         }
@@ -114,10 +126,7 @@ public class UserController {
             queryWrapper.like("address", address);
         }
 
-        //进行倒序输出
-        queryWrapper.orderByDesc("id");
-
-        return userService.page(new Page<>(pageNum, pageSize), queryWrapper);
+        return Result.success(userService.page(new Page<>(pageNum, pageSize), queryWrapper));
     }
 
     /**
@@ -144,7 +153,7 @@ public class UserController {
         // 一次性写出list内的对象到excel，使用默认样式，强制输出标题
         writer.write(list, true);
 
-        // 设置浏览器响应的格式，固定写法
+        // 设置浏览器响应的格式
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
         String fileName = URLEncoder.encode("用户信息", "UTF-8");
         response.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xlsx");
