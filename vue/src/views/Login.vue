@@ -28,9 +28,9 @@ export default {
   data() {
     return {
       user: {},
-      rules: {
+      rules: { //表单校验规则
         username: [
-          {required: true, message: '请输入用户名', trigger: 'blur'},
+          {required: true, message: '请输入用户名', trigger: 'blur'}, //blur 鼠标失焦
           {min: 3, max: 10, message: '长度在 3 到 5 个字符', trigger: 'blur'}
         ],
         password: [
