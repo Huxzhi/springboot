@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.log.Log;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.huxzhi.springboot.Utils.TokenUtils;
 import com.huxzhi.springboot.common.Constants;
 import com.huxzhi.springboot.controller.dto.UserDTO;
 import com.huxzhi.springboot.entity.User;
@@ -30,9 +31,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User one = getUserInfo(userDTO);
         if (one != null) {
             BeanUtil.copyProperties(one, userDTO, true);
-            // 设置token
-//            String token = TokenUtils.genToken(one.getId().toString(), one.getPassword());
-//            userDTO.setToken(token);
+            // 设置token，id 作为载荷，密码 作为密钥
+            String token = TokenUtils.genToken(one.getId().toString(), one.getPassword());
+            userDTO.setToken(token);
 //
 //            String role = one.getRole(); // ROLE_ADMIN
 //            // 设置用户的菜单列表

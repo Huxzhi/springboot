@@ -9,6 +9,7 @@ import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.huxzhi.springboot.Utils.TokenUtils;
 import com.huxzhi.springboot.common.Constants;
 import com.huxzhi.springboot.common.Result;
 import com.huxzhi.springboot.controller.dto.UserDTO;
@@ -125,6 +126,11 @@ public class UserController {
         if (!"".equals(address)) {
             queryWrapper.like("address", address);
         }
+
+        // 获取当前用户信息
+        User currentUser = TokenUtils.getCurrentUser();
+        System.out.println("\n获取当前用户信息=====================" + currentUser.getUsername() + "\n");
+
 
         return Result.success(userService.page(new Page<>(pageNum, pageSize), queryWrapper));
     }
