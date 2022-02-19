@@ -5,8 +5,8 @@ spring:
   #数据库连接 spring:，已加密
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    # 原url: jdbc:mysql://huxzhi.top:3306/floating-population?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2b8
-    url: ENC(5x30WNLtdRCpAQdv3Otu0WFYWu7oy8GJ4GgA2PSvE+ijMsSgF5xqPjkAIyi/H99DV6lLkdwl9ZMlkhkV4pce11H5fVnZ34YpZqtGZkfTqlLMJXfggVRFy8zLkn1MgsgUCFbddU1UP4cQYaEAhTokuxQ+EXbDbBaQH5iIKZAjrPlLehPFBIlzCw==)
+    # 原url: jdbc:mysql://8.141.48.181:3306/floating-population?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2b8
+    url: ENC(DTOFf0EfYZad84406ZczYXT2zXZE+/obb0HRGGq+xGomMNA4nlGEujav2ct0RV8wcnKG5SHx/PxEWB4mEgo95L7x3L6KFRLng4/EhINXXyanMWC+/IwnRSCS6JSDFSu7+Xmu3zlWAIgr6YNlZOb45ScL75TpH7QHBqah+OVvUtleFChSRATn2g==)
     username: ENC(u8urMeaoOrS3kTyI6G140A6n4OUbLNFL)
     password: ENC(fB55Vo5yN1moCRIm/gBn5AxjQbDWu8NK)
   mvc:

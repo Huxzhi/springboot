@@ -5,6 +5,11 @@ Vue.use(VueRouter)
 
 const routes = [
     {
+        path: '/login',
+        name: 'Login',
+        component: () => import('../views/Login.vue')
+    },
+    {
         path: '/',
         name: 'Manage',
         component: () => import('../views/Manage.vue'),
@@ -94,7 +99,7 @@ setRoutes()
 
 router.beforeEach((to, from, next) => {
     localStorage.setItem("currentPathName", to.name)  // 设置当前的路由名称
-    store.commit("setPath") //触发store的数据更新
+    //store.commit("setPath") //触发store的数据更新
 
     // // 未找到路由的情况
     // if (!to.matched.length) {
