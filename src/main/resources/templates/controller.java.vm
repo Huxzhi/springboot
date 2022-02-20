@@ -77,7 +77,7 @@ public ${entity} findOne(@PathVariable Integer id){
 public Page<${entity}> findPage(@RequestParam Integer pageNum,
 @RequestParam Integer pageSize){
 
-        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+        QueryWrapper<${entity}> queryWrapper=new QueryWrapper<>();
 
         //进行倒序输出
         queryWrapper.orderByDesc("id");
