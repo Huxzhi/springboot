@@ -57,7 +57,7 @@ export default {
         if (res.code === '200') {
           this.$message.success("保存成功")
 
-          // 触发父级更新User的方法
+          // 触发父级更新User的方法，用来更新Header里面的头像和昵称
           this.$emit("refreshUser")
 
           // 更新浏览器存储的用户信息
@@ -83,6 +83,7 @@ export default {
   text-align: center;
   padding-bottom: 10px;
 }
+
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -90,9 +91,11 @@ export default {
   position: relative;
   overflow: hidden;
 }
+
 .avatar-uploader .el-upload:hover {
   border-color: #409EFF;
 }
+
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
@@ -101,6 +104,7 @@ export default {
   line-height: 138px;
   text-align: center;
 }
+
 .avatar {
   width: 138px;
   height: 138px;

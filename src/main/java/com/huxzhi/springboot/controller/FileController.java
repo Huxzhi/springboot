@@ -141,6 +141,7 @@ public class FileController {
         queryWrapper.in("id", ids);
         List<Files> files = fileMapper.selectList(queryWrapper);
         for (Files file : files) {
+            //假删除，在逻辑上设置删除
             file.setIsDelete(true);
             fileMapper.updateById(file);
         }
