@@ -1,11 +1,12 @@
 package com.huxzhi.springboot.service;
 
-import com.huxzhi.springboot.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.huxzhi.springboot.controller.dto.UserDTO;
+import com.huxzhi.springboot.entity.User;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author huxzhi
@@ -13,4 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserService extends IService<User> {
 
+    UserDTO login(UserDTO userDTO);
+
+    User register(UserDTO userDTO);
 }
