@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from "@/store";
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,7 @@ const routes = [
             {path: 'home', name: '首页', component: () => import('../views/Home.vue')},
             {path: 'user', name: '用户管理', component: () => import('../views/User.vue')},
             {path: 'person', name: '个人信息', component: () => import('../views/Person.vue')},
+            {path: 'file', name: '文件管理', component: () => import('../views/File.vue')},
         ]
     },
     {
@@ -104,7 +106,7 @@ setRoutes()
 
 router.beforeEach((to, from, next) => {
     localStorage.setItem("currentPathName", to.name)  // 设置当前的路由名称
-    //store.commit("setPath") //触发store的数据更新
+    store.commit("setPath") //触发store的数据更新
 
     // // 未找到路由的情况
     // if (!to.matched.length) {

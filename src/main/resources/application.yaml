@@ -24,6 +24,12 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #日志
 
+files:
+  upload:
+    path: /Users/huxinzhi/Developer/GitHub/Graduation-Design/files/
+
+
+
 # 加密工具（换成java类了，生成一个 jasyptStringEncryptor 组件放入SpringBoot中，在配置类中 JasyptConfig.java）
 #jasypt:
 #  encryptor:
