@@ -24,6 +24,7 @@ const routes = [
             {path: 'user', name: '用户管理', component: () => import('../views/User.vue')},
             {path: 'person', name: '个人信息', component: () => import('../views/Person.vue')},
             {path: 'role', name: '角色信息', component: () => import('../views/Role.vue')},
+            {path: 'menu', name: '角色信息', component: () => import('../views/Menu.vue')},
             {path: 'file', name: '文件管理', component: () => import('../views/File.vue')},
         ]
     },
