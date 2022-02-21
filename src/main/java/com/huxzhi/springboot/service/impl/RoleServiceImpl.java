@@ -6,9 +6,11 @@ import com.huxzhi.springboot.entity.Menu;
 import com.huxzhi.springboot.entity.Role;
 import com.huxzhi.springboot.entity.RoleMenu;
 import com.huxzhi.springboot.mapper.RoleMapper;
+import com.huxzhi.springboot.mapper.RoleMenuMapper;
 import com.huxzhi.springboot.service.IMenuService;
 import com.huxzhi.springboot.service.IRoleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -33,11 +35,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     @Transactional
     @Override
     public void setRoleMenu(Integer roleId, List<Integer> menuIds) {
+        // 先删除当前角色id所有的绑定关系
+        //在 Mapper 中写了
 //        QueryWrapper<RoleMenu> queryWrapper = new QueryWrapper<>();
 //        queryWrapper.eq("role_id", roleId);
 //        roleMenuMapper.delete(queryWrapper);
 
-        // 先删除当前角色id所有的绑定关系
+
         roleMenuMapper.deleteByRoleId(roleId);
 
         // 再把前端传过来的菜单id数组绑定到当前的这个角色id上去

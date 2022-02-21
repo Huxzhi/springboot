@@ -1,7 +1,10 @@
 package com.huxzhi.springboot.controller.dto;
 
 
+import com.huxzhi.springboot.entity.Menu;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * 接受前端登录请求的参数
@@ -18,6 +21,6 @@ public class UserDTO {
 
     private String avatarUrl;
     private String token;
-//    private String role;
-//    private List<Menu> menus;
+    private String role;
+    private List<Menu> menus;
 }

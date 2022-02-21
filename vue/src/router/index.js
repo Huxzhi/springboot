@@ -9,33 +9,17 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: () => import('../views/Login.vue')
-    }, {
+    },
+    {
         path: '/register',
         name: 'Register',
         component: () => import('../views/Register.vue')
     },
     {
-        path: '/',
-        name: 'Manage',
-        component: () => import('../views/Manage.vue'),
-        redirect: "/home",
-        children: [
-            {path: 'home', name: '首页', component: () => import('../views/Home.vue')},
-            {path: 'user', name: '用户管理', component: () => import('../views/User.vue')},
-            {path: 'person', name: '个人信息', component: () => import('../views/Person.vue')},
-            {path: 'role', name: '角色信息', component: () => import('../views/Role.vue')},
-            {path: 'menu', name: '角色信息', component: () => import('../views/Menu.vue')},
-            {path: 'file', name: '文件管理', component: () => import('../views/File.vue')},
-        ]
+        path: '/404',
+        name: '404',
+        component: () => import('../views/404.vue')
     },
-    {
-        path: '/about',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-    }
 ]
 
 const router = new VueRouter({
@@ -53,7 +37,6 @@ export const resetRouter = () => {
     })
 }
 
-
 // 注意：刷新页面会导致页面路由重置
 export const setRoutes = () => {
     const storeMenus = localStorage.getItem("menus");
@@ -69,8 +52,8 @@ export const setRoutes = () => {
                 component: () => import('../views/Manage.vue'),
                 redirect: "/home",
                 children: [
-                    // {path: 'person', name: '个人信息', component: () => import('../views/Person.vue')},
-                    // {path: 'password', name: '修改密码', component: () => import('../views/Password.vue')}
+                    {path: 'person', name: '个人信息', component: () => import('../views/Person.vue')},
+                    {path: 'password', name: '修改密码', component: () => import('../views/Password.vue')}
                 ]
             }
             const menus = JSON.parse(storeMenus)
@@ -108,18 +91,18 @@ setRoutes()
 
 router.beforeEach((to, from, next) => {
     localStorage.setItem("currentPathName", to.name)  // 设置当前的路由名称
-    store.commit("setPath") //触发store的数据更新
+    store.commit("setPath")
 
-    // // 未找到路由的情况
-    // if (!to.matched.length) {
-    //     const storeMenus = localStorage.getItem("menus")
-    //     if (storeMenus) {
-    //         next("/404")
-    //     } else {
-    //         // 跳回登录页面
-    //         next("/login")
-    //     }
-    // }
+    // 未找到路由的情况
+    if (!to.matched.length) {
+        const storeMenus = localStorage.getItem("menus")
+        if (storeMenus) {
+            next("/404")
+        } else {
+            // 跳回登录页面
+            next("/login")
+        }
+    }
     // 其他的情况都放行
     next()
 

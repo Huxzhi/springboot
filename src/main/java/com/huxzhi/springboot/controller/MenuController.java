@@ -4,8 +4,11 @@ package com.huxzhi.springboot.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.huxzhi.springboot.common.Constants;
 import com.huxzhi.springboot.common.Result;
+import com.huxzhi.springboot.entity.Dict;
 import com.huxzhi.springboot.entity.Menu;
+import com.huxzhi.springboot.mapper.DictMapper;
 import com.huxzhi.springboot.service.IMenuService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +30,8 @@ public class MenuController {
     @Resource
     private IMenuService menuService;
 
-//    @Resource
-//    private DictMapper dictMapper;
+    @Resource
+    private DictMapper dictMapper;
 
     // 新增或者更新
     @PostMapping
@@ -56,6 +59,7 @@ public class MenuController {
 
     @GetMapping
     public Result findAll(@RequestParam(defaultValue = "") String name) {
+        //封装到 service 上面
         return Result.success(menuService.findMenus(name));
     }
 
@@ -74,12 +78,13 @@ public class MenuController {
         return Result.success(menuService.page(new Page<>(pageNum, pageSize), queryWrapper));
     }
 
-//    @GetMapping("/icons")
-//    public Result getIcons() {
-//        QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
-//        queryWrapper.eq("type", Constants.DICT_TYPE_ICON);
-//        return Result.success(dictMapper.selectList(queryWrapper));
-//    }
+    //查询 icons 的名称和对应的值
+    @GetMapping("/icons")
+    public Result getIcons() {
+        QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("type", Constants.DICT_TYPE_ICON);
+        return Result.success(dictMapper.selectList(queryWrapper));
+    }
 
 }
 

@@ -60,7 +60,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    <!--弹窗-->
     <el-dialog title="菜单信息" :visible.sync="dialogFormVisible" width="30%">
       <el-form label-width="80px" size="small">
         <el-form-item label="名称">
