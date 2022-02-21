@@ -45,10 +45,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
         roleMenuMapper.deleteByRoleId(roleId);
 
         // 再把前端传过来的菜单id数组绑定到当前的这个角色id上去
+        // 不能在循环遍历里面增加数据
         List<Integer> menuIdsCopy = CollUtil.newArrayList(menuIds);
+
         for (Integer menuId : menuIds) {
             Menu menu = menuService.getById(menuId);
-            if (menu.getPid() != null && !menuIdsCopy.contains(menu.getPid())) { // 二级菜单 并且传过来的menuId数组里面没有它的父级id
+            //fixme 前端设计时，tree控件没有传递父级id。 如果是 二级菜单 并且传过来的menuId数组里面没有它的父级id
+            if (menu.getPid() != null && !menuIdsCopy.contains(menu.getPid())) {
                 // 那么我们就得补上这个父级id
                 RoleMenu roleMenu = new RoleMenu();
                 roleMenu.setRoleId(roleId);

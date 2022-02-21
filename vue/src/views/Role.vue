@@ -2,8 +2,8 @@
   <div>
     <div style="margin: 10px 0">
       <el-input style="width: 200px" placeholder="请输入名称" suffix-icon="el-icon-search" v-model="name"></el-input>
-<!--      <el-input style="width: 200px" placeholder="请输入邮箱" suffix-icon="el-icon-message" class="ml-5" v-model="email"></el-input>-->
-<!--      <el-input style="width: 200px" placeholder="请输入地址" suffix-icon="el-icon-position" class="ml-5" v-model="address"></el-input>-->
+      <!--      <el-input style="width: 200px" placeholder="请输入邮箱" suffix-icon="el-icon-message" class="ml-5" v-model="email"></el-input>-->
+      <!--      <el-input style="width: 200px" placeholder="请输入地址" suffix-icon="el-icon-position" class="ml-5" v-model="address"></el-input>-->
       <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
       <el-button type="warning" @click="reset">重置</el-button>
     </div>
@@ -21,19 +21,20 @@
       >
         <el-button type="danger" slot="reference">批量删除 <i class="el-icon-remove-outline"></i></el-button>
       </el-popconfirm>
-<!--      <el-upload action="http://localhost:9090/user/import" :show-file-list="false" accept="xlsx" :on-success="handleExcelImportSuccess" style="display: inline-block">-->
-<!--        <el-button type="primary" class="ml-5">导入 <i class="el-icon-bottom"></i></el-button>-->
-<!--      </el-upload>-->
-<!--      <el-button type="primary" @click="exp" class="ml-5">导出 <i class="el-icon-top"></i></el-button>-->
+      <!--      <el-upload action="http://localhost:9090/user/import" :show-file-list="false" accept="xlsx" :on-success="handleExcelImportSuccess" style="display: inline-block">-->
+      <!--        <el-button type="primary" class="ml-5">导入 <i class="el-icon-bottom"></i></el-button>-->
+      <!--      </el-upload>-->
+      <!--      <el-button type="primary" @click="exp" class="ml-5">导出 <i class="el-icon-top"></i></el-button>-->
     </div>
 
-    <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="handleSelectionChange">
+    <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"
+              @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="flag" label="唯一标识"></el-table-column>
       <el-table-column prop="description" label="描述"></el-table-column>
-      <el-table-column label="操作"  width="280" align="center">
+      <el-table-column label="操作" width="280" align="center">
         <template slot-scope="scope">
           <el-button type="info" @click="selectMenu(scope.row)">分配菜单 <i class="el-icon-menu"></i></el-button>
           <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
@@ -63,7 +64,7 @@
       </el-pagination>
     </div>
 
-    <el-dialog title="角色信息" :visible.sync="dialogFormVisible" width="30%" >
+    <el-dialog title="角色信息" :visible.sync="dialogFormVisible" width="30%">
       <el-form label-width="80px" size="small">
         <el-form-item label="名称">
           <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -236,6 +237,8 @@ export default {
 
       this.request.get("/role/roleMenu/" + this.roleId).then(res => {
         this.checks = res.data
+
+        //在分配菜单进行修改
         this.ids.forEach(id => {
           if (!this.checks.includes(id)) {
             // 可能会报错：Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'setChecked')
@@ -254,6 +257,6 @@ export default {
 
 <style>
 .headerBg {
-  background: #eee!important;
+  background: #eee !important;
 }
 </style>

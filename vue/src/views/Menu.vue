@@ -66,7 +66,7 @@
         <el-form-item label="名称">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="路径">
+        <el-form-item label="路由路径">
           <el-input v-model="form.path" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="页面路径">

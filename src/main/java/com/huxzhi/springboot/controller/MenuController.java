@@ -52,6 +52,7 @@ public class MenuController {
         return Result.success();
     }
 
+    //针对菜单分配  获取所有菜单的id，和选中的菜单 id 进行比较
     @GetMapping("/ids")
     public Result findAllIds() {
         return Result.success(menuService.list().stream().map(Menu::getId));

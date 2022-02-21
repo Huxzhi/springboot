@@ -37,13 +37,16 @@ export const resetRouter = () => {
     })
 }
 
-// 注意：刷新页面会导致页面路由重置
+// 注意：刷新页面会导致页面路由重置，已解决，再重置路由即可
 export const setRoutes = () => {
+    //todo login时 从后端请求过来，保存到本地，再从本地读取，有点不安全，设了一个保障，刷新页面重置路由，后续优化一下
+    // 不改了，改起来有点麻烦
     const storeMenus = localStorage.getItem("menus");
     if (storeMenus) {
 
         // 获取当前的路由对象名称数组
         const currentRouteNames = router.getRoutes().map(v => v.name)
+        //只有不包含 Manage 时，才设置路由。登录时已经设置一次路由，会重复设置
         if (!currentRouteNames.includes('Manage')) {
             // 拼装动态路由
             const manageRoute = {
@@ -57,6 +60,7 @@ export const setRoutes = () => {
                 ]
             }
             const menus = JSON.parse(storeMenus)
+            //有两级目录，
             menus.forEach(item => {
                 if (item.path) {  // 当且仅当path不为空的时候才去设置路由
                     let itemMenu = {
