@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.huxzhi.springboot.Utils.TokenUtils;
 import com.huxzhi.springboot.common.Constants;
 import com.huxzhi.springboot.controller.dto.UserDTO;
+import com.huxzhi.springboot.controller.dto.UserPasswordDTO;
 import com.huxzhi.springboot.entity.Menu;
 import com.huxzhi.springboot.entity.User;
 import com.huxzhi.springboot.exception.ServiceException;
@@ -94,6 +95,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             throw new ServiceException(Constants.CODE_500, "系统错误");
         }
         return one;
+    }
+
+    @Override
+    public void updatePassword(UserPasswordDTO userPasswordDTO) {
+        int update = userMapper.updatePassword(userPasswordDTO);
+        if (update < 1) {
+            throw new ServiceException(Constants.CODE_600, "密码错误");
+        }
     }
 
     /**

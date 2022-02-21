@@ -13,6 +13,7 @@ import com.huxzhi.springboot.Utils.TokenUtils;
 import com.huxzhi.springboot.common.Constants;
 import com.huxzhi.springboot.common.Result;
 import com.huxzhi.springboot.controller.dto.UserDTO;
+import com.huxzhi.springboot.controller.dto.UserPasswordDTO;
 import com.huxzhi.springboot.entity.User;
 import com.huxzhi.springboot.service.IUserService;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +38,6 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-//    @Value("${files.upload.path}")
-//    private String filesUploadPath;
 
     @Resource
     private IUserService userService;
@@ -64,6 +63,7 @@ public class UserController {
         return Result.success(userService.register(userDTO));
     }
 
+
     // 新增或者更新
     @PostMapping
     public Result save(@RequestBody User user) {
@@ -76,11 +76,12 @@ public class UserController {
      * @param userPasswordDTO
      * @return
      */
-//    @PostMapping("/password")
-//    public Result password(@RequestBody UserPasswordDTO userPasswordDTO) {
-//        userService.updatePassword(userPasswordDTO);
-//        return Result.success();
-//    }
+    @PostMapping("/password")
+    public Result password(@RequestBody UserPasswordDTO userPasswordDTO) {
+        userService.updatePassword(userPasswordDTO);
+        return Result.success();
+    }
+
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         return Result.success(userService.removeById(id));
