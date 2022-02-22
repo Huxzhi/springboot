@@ -36,30 +36,27 @@
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
-      <el-table-column prop="order" label="真实姓名" width="80"></el-table-column>
-      <el-table-column prop="punishmentAuhority" label="年龄"></el-table-column>
-      <el-table-column prop="illegalTime" label="性别" width="80"></el-table-column>
-      <el-table-column prop="illegalPlace" label="民族"></el-table-column>
-      <el-table-column prop="idCard" label="身份证号" width="140"></el-table-column>
-      <el-table-column prop="illegalActivities" label="政治面貌"></el-table-column>
-      <el-table-column prop="illegalPerson" label="婚姻状况"></el-table-column>
-      <el-table-column prop="illegalIdCard" label="现居地"></el-table-column>
-      <el-table-column prop="forfeit" label="电话"></el-table-column>
-      <el-table-column prop="otherMeasures" label="电话"></el-table-column>
-      <el-table-column prop="penaltyTime" label="电话"></el-table-column>
-      <el-table-column prop="isAccepted" label="电话"></el-table-column>
-      <el-table-column prop="receiver" label="电话"></el-table-column>
-      <el-table-column prop="isAccepted" label="电话">
-
+      <el-table-column prop="order" label="订单号" width="80"></el-table-column>
+      <el-table-column prop="punishmentAuhority" label="处罚机关"></el-table-column>
+      <el-table-column prop="illegalTime" label="违法时间" width="80"></el-table-column>
+      <el-table-column prop="illegalPlace" label="违法地点"></el-table-column>
+      <el-table-column prop="illegalActivities" label="违法行为"></el-table-column>
+      <el-table-column prop="illegalPerson" label="违法人员"></el-table-column>
+      <el-table-column prop="illegalIdCard" label="违法人员身份证号"></el-table-column>
+      <el-table-column prop="forfeit" label="罚款金额"></el-table-column>
+      <el-table-column prop="otherMeasures" label="其他措施"></el-table-column>
+      <el-table-column prop="penaltyTime" label="处罚时间"></el-table-column>
+      <el-table-column prop="isAccepted" label="是否受理">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.isDisability" active-color="#13ce66" inactive-color="#ccc"
                      @change="changeEnable(scope.row)"></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="acceptanceTime" width="140">
+      <el-table-column prop="receiver" label="受理人"></el-table-column>
+      <el-table-column prop="acceptanceTime" label="受理时间" width="140">
 
       </el-table-column>
-     
+
 
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
@@ -170,8 +167,6 @@ export default {
       infoname: "",
       idCard: "",
 
-      zhen: true,
-      jia: false,
 
       form: {},
       dialogFormVisible: false,
@@ -188,13 +183,13 @@ export default {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
-          infoname: this.infoname,
-          idCard: this.idCard,
+          // infoname: this.infoname,
+          // idCard: this.idCard,
         }
       }).then(res => {
         this.tableData = res.data.records
         this.total = res.data.total
-        console.log(this.form)
+        // console.log(this.form)
       })
 
     },

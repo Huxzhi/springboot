@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -38,7 +38,7 @@ public class Illegal implements Serializable {
     private String punishmentAuhority;
 
     @ApiModelProperty("违法时间")
-    private LocalDateTime illegalTime;
+    private Date illegalTime;
 
     @ApiModelProperty("违法地点")
     private String illegalPlace;
@@ -59,7 +59,7 @@ public class Illegal implements Serializable {
     private String otherMeasures;
 
     @ApiModelProperty("处罚时间")
-    private LocalDateTime penaltyTime;
+    private Date penaltyTime;
 
     @ApiModelProperty("是否受理")
     private Boolean isAccepted;
@@ -68,7 +68,7 @@ public class Illegal implements Serializable {
     private String receiver;
 
     @ApiModelProperty("受理时间")
-    private LocalDateTime acceptanceTime;
+    private Date acceptanceTime;
 
 
 }
