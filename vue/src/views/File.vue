@@ -29,7 +29,7 @@
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
       <el-table-column prop="name" label="文件名称"></el-table-column>
       <el-table-column prop="type" label="文件类型"></el-table-column>
-      <el-table-column prop="size" label="文件大小(kb)"></el-table-column>
+      <el-table-column prop="size" label="文件大小(KB)"></el-table-column>
       <el-table-column label="预览">
         <template slot-scope="scope">
           <el-button type="primary" @click="preview(scope.row.url)">预览</el-button>

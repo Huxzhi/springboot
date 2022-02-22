@@ -1,11 +1,12 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-      <el-input style="width: 200px" placeholder="请输入真实姓名" suffix-icon="el-icon-search" v-model="orderId"></el-input>
-      <el-input style="width: 200px" placeholder="请输入身份证号" suffix-icon="el-icon-edit" class="ml-5"
-                v-model="idCard"></el-input>
-      <el-input style="width: 200px" placeholder="请输入身份证号" suffix-icon="el-icon-edit" class="ml-5"
-                v-model="idCard"></el-input>
+      <el-input style="width: 200px" placeholder="请输入违法地点" suffix-icon="el-icon-search"
+                v-model="illegalPlace"></el-input>
+      <el-input style="width: 200px" placeholder="请输入违法行为" suffix-icon="el-icon-edit" class="ml-5"
+                v-model="illegalActivities"></el-input>
+      <el-input style="width: 200px" placeholder="请输入违法人员" suffix-icon="el-icon-edit" class="ml-5"
+                v-model="illegalPerson"></el-input>
 
 
       <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
@@ -54,10 +55,7 @@
       </el-table-column>
       <el-table-column prop="receiver" label="受理人"></el-table-column>
       <el-table-column prop="acceptanceTime" label="受理时间" width="140">
-
       </el-table-column>
-
-
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
           <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
@@ -88,64 +86,48 @@
     </div>
 
 
-    <el-dialog title="流动人口信息" :visible.sync="dialogFormVisible" width="30%">
+    <el-dialog title="违法记录信息" :visible.sync="dialogFormVisible" width="30%">
       <el-form label-width="100px" size="small">
-        <el-form-item label="真实姓名">
-          <el-input v-model="form.infoname" autocomplete="off"></el-input>
+        <el-form-item label="订单号">
+          <el-input v-model="form.orderId" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="年龄">
-          <el-input v-model="form.age" autocomplete="off"></el-input>
+        <el-form-item label="处罚机关">
+          <el-input v-model="form.punishmentAuhority" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="性别">
-          <el-radio v-model="form.gender" label="男" value="男">男</el-radio>
-          <el-radio v-model="form.gender" label="女" value="女">女</el-radio>
+        <el-form-item label="违法时间">
+          <el-input v-model="form.illegalTime" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="民族">
-          <el-input v-model="form.nation" autocomplete="off"></el-input>
+        <el-form-item label="违法地点">
+          <el-input v-model="form.illegalPlace" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="身份证号">
-          <el-input v-model="form.idCard" autocomplete="off"></el-input>
+        <el-form-item label="违法行为">
+          <el-input v-model="form.illegalActivities" autocomplete="off"></el-input>
         </el-form-item>
-
-        <el-form-item label="政治面貌">
-          <el-select clearable v-model="form.politicalOutlook" placeholder="请选择政治面貌" style="width: 100%">
-            <el-option v-for="item in politicalOutlooks" :key="item" :label="item" :value="item"></el-option>
-          </el-select>
+        <el-form-item label="违法人员">
+          <el-input v-model="form.illegalPerson" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="婚姻状况">
-          <el-select clearable v-model="form.marital" placeholder="请选择角色" style="width: 100%">
-            <el-option v-for="item in maritals" :key="item" :label="item" :value="item"></el-option>
-          </el-select>
+        <el-form-item label="违法人员身份证号">
+          <el-input v-model="form.illegalIdCard" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="现居地">
-          <el-input v-model="form.currentSidence" autocomplete="off"></el-input>
+        <el-form-item label="罚款金额">
+          <el-input v-model="form.forfeit" autocomplete="off"></el-input>
         </el-form-item>
-
-        <el-form-item label="手机号">
-          <el-input v-model="form.phone" autocomplete="off"></el-input>
+        <el-form-item label="其他措施">
+          <el-input v-model="form.otherMeasures" autocomplete="off"></el-input>
         </el-form-item>
-
-        <el-form-item label="是否为高级技术人才">
-
-          <el-radio-group v-model="form.isSeniorTechnician">
-            <el-radio :label=true>是</el-radio>
-            <el-radio :label=false>否</el-radio>
-          </el-radio-group>
+        <el-form-item label="处罚时间">
+          <el-input v-model="form.penaltyTime" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="是否残疾">
-          <el-radio v-model="form.isDisability" :label=true value="是">是</el-radio>
-          <el-radio v-model="form.isDisability" :label=false value="是">否</el-radio>
+        <el-form-item label="是否受理">
+          <el-radio v-model="form.isAccepted" :label=true>是</el-radio>
+          <el-radio v-model="form.isAccepted" :label=false>否</el-radio>
         </el-form-item>
-        <el-form-item label="是否军人">
-          <el-radio v-model="form.isSoldier" :label=true>是</el-radio>
-          <el-radio v-model="form.isSoldier" :label=false>否</el-radio>
+        <el-form-item label="受理人">
+          <el-input v-model="form.receiver" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="是否外国人">
-          <el-radio v-model="form.isForeigner" :label=true>是</el-radio>
-          <el-radio v-model="form.isForeigner" :label=false>否</el-radio>
+        <el-form-item label="受理时间">
+          <el-input v-model="form.acceptanceTime" autocomplete="off"></el-input>
         </el-form-item>
-
-
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -164,9 +146,9 @@ export default {
       total: 0,
       pageNum: 1,
       pageSize: 10,
-      infoname: "",
-      idCard: "",
-
+      illegalPlace: "",
+      illegalActivities: "",
+      illegalPerson: "",
 
       form: {},
       dialogFormVisible: false,
@@ -183,18 +165,19 @@ export default {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
-          // infoname: this.infoname,
-          // idCard: this.idCard,
+          illegalPlace: this.illegalPlace,
+          illegalActivities: this.illegalPlace,
+          illegalPerson: this.illegalPlace,
         }
       }).then(res => {
         this.tableData = res.data.records
         this.total = res.data.total
-        // console.log(this.form)
+
       })
 
     },
     save() {
- 
+
       console.log(this.form)
       this.request.post("/illegal", this.form).then(res => {
         if (res.code === '200') {
