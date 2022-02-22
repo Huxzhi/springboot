@@ -1,12 +1,12 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-      <el-input style="width: 200px" placeholder="请输入违法地点" suffix-icon="el-icon-search"
-                v-model="illegalPlace"></el-input>
-      <el-input style="width: 200px" placeholder="请输入违法行为" suffix-icon="el-icon-edit" class="ml-5"
-                v-model="illegalActivities"></el-input>
-      <el-input style="width: 200px" placeholder="请输入违法人员" suffix-icon="el-icon-edit" class="ml-5"
-                v-model="illegalPerson"></el-input>
+      <el-input style="width: 200px" placeholder="请输入姓名" suffix-icon="el-icon-search"
+                v-model="name"></el-input>
+      <el-input style="width: 200px" placeholder="请输入身份证号" suffix-icon="el-icon-edit" class="ml-5"
+                v-model="idCard"></el-input>
+      <el-input style="width: 200px" placeholder="请输入在读学校" suffix-icon="el-icon-edit" class="ml-5"
+                v-model="school"></el-input>
 
 
       <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
@@ -26,7 +26,7 @@
       >
         <el-button type="danger" slot="reference">批量删除 <i class="el-icon-remove-outline"></i></el-button>
       </el-popconfirm>
-      <el-upload action="http://localhost:8081/illegal/import" :show-file-list="false" accept="xlsx"
+      <el-upload action="http://localhost:8081/birth/import" :show-file-list="false" accept="xlsx"
                  :on-success="handleExcelImportSuccess" style="display: inline-block">
         <el-button type="primary" class="ml-5">导入 <i class="el-icon-bottom"></i></el-button>
       </el-upload>
@@ -37,25 +37,14 @@
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
-      <el-table-column prop="orderId" label="订单号" width="80"></el-table-column>
-      <el-table-column prop="punishmentAuhority" label="处罚机关"></el-table-column>
-      <el-table-column prop="illegalTime" label="违法时间" width="80"></el-table-column>
-      <el-table-column prop="illegalPlace" label="违法地点"></el-table-column>
-      <el-table-column prop="illegalActivities" label="违法行为"></el-table-column>
-      <el-table-column prop="illegalPerson" label="违法人员"></el-table-column>
-      <el-table-column prop="illegalIdCard" label="违法人员身份证号"></el-table-column>
-      <el-table-column prop="forfeit" label="罚款金额"></el-table-column>
-      <el-table-column prop="otherMeasures" label="其他措施"></el-table-column>
-      <el-table-column prop="penaltyTime" label="处罚时间"></el-table-column>
-      <el-table-column prop="isAccepted" label="是否受理">
-        <template slot-scope="scope">
-          <el-switch v-model="scope.row.isAccepted" active-color="#13ce66" inactive-color="#ccc"
-                     @change="changeEnable(scope.row)"></el-switch>
-        </template>
-      </el-table-column>
-      <el-table-column prop="receiver" label="受理人"></el-table-column>
-      <el-table-column prop="acceptanceTime" label="受理时间" width="140">
-      </el-table-column>
+      <el-table-column prop="name" label="姓名" width="80"></el-table-column>
+      <el-table-column prop="idCard" label="身份证号" width="150"></el-table-column>
+      <el-table-column prop="age" label="年龄" width="80"></el-table-column>
+      <el-table-column prop="gender" label="性别" width="80"></el-table-column>
+      <el-table-column prop="school" label="在读学校" width="120"></el-table-column>
+      <el-table-column prop="fatherId" label="父亲角色id" width="80"></el-table-column>
+      <el-table-column prop="motherId" label="母亲角色id" width="80"></el-table-column>
+
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
           <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
@@ -85,49 +74,30 @@
       </el-pagination>
     </div>
 
-
-    <el-dialog title="违法记录信息" :visible.sync="dialogFormVisible" width="30%">
+    <el-dialog title="生育记录信息" :visible.sync="dialogFormVisible" width="30%">
       <el-form label-width="100px" size="small">
-        <el-form-item label="订单号">
-          <el-input v-model="form.orderId" autocomplete="off"></el-input>
+        <el-form-item label="姓名">
+          <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="处罚机关">
-          <el-input v-model="form.punishmentAuhority" autocomplete="off"></el-input>
+        <el-form-item label="身份证号">
+          <el-input v-model="form.idCard" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="违法时间">
-          <el-input v-model="form.illegalTime" autocomplete="off"></el-input>
+        <el-form-item label="年龄">
+          <el-input v-model="form.age" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="违法地点">
-          <el-input v-model="form.illegalPlace" autocomplete="off"></el-input>
+        <el-form-item label="性别">
+          <el-input v-model="form.gender" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="违法行为">
-          <el-input v-model="form.illegalActivities" autocomplete="off"></el-input>
+        <el-form-item label="在读学校">
+          <el-input v-model="form.school" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="违法人员">
-          <el-input v-model="form.illegalPerson" autocomplete="off"></el-input>
+        <el-form-item label="父亲角色id">
+          <el-input v-model="form.fatherId" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="违法人员身份证号">
-          <el-input v-model="form.illegalIdCard" autocomplete="off"></el-input>
+        <el-form-item label="母亲角色id">
+          <el-input v-model="form.motherId" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="罚款金额">
-          <el-input v-model="form.forfeit" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="其他措施">
-          <el-input v-model="form.otherMeasures" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="处罚时间">
-          <el-input v-model="form.penaltyTime" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="是否受理">
-          <el-radio v-model="form.isAccepted" :label=true>是</el-radio>
-          <el-radio v-model="form.isAccepted" :label=false>否</el-radio>
-        </el-form-item>
-        <el-form-item label="受理人">
-          <el-input v-model="form.receiver" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="受理时间">
-          <el-input v-model="form.acceptanceTime" autocomplete="off"></el-input>
-        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -139,21 +109,19 @@
 
 <script>
 export default {
-  name: "Illegal",
+  name: "Birth",
   data() {
     return {
       tableData: [],
       total: 0,
       pageNum: 1,
       pageSize: 10,
-      illegalPlace: "",
-      illegalActivities: "",
-      illegalPerson: "",
+      name: "",
+      idCard: "",
+      school: "",
 
       form: {},
       dialogFormVisible: false,
-
-
     }
   },
   created() {
@@ -161,25 +129,22 @@ export default {
   },
   methods: {
     load() {
-      this.request.get("/illegal/page", {
+      this.request.get("/birth/page", {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
-          illegalPlace: this.illegalPlace,
-          illegalActivities: this.illegalActivities,
-          illegalPerson: this.illegalPerson,
+          name: this.name,
+          idCard: this.idCard,
+          school: this.school,
         }
       }).then(res => {
         this.tableData = res.data.records
         this.total = res.data.total
-
       })
-
     },
     save() {
-
       console.log(this.form)
-      this.request.post("/illegal", this.form).then(res => {
+      this.request.post("/birth", this.form).then(res => {
         if (res.code === '200') {
           this.$message.success("保存成功")
           this.dialogFormVisible = false
@@ -195,11 +160,10 @@ export default {
     },
     handleEdit(row) {
       this.form = JSON.parse(JSON.stringify(row))
-
       this.dialogFormVisible = true
     },
     del(id) {
-      this.request.delete("/illegal/" + id).then(res => {
+      this.request.delete("/birth/" + id).then(res => {
         if (res.code === '200') {
           this.$message.success("删除成功")
           this.load()
@@ -214,7 +178,7 @@ export default {
     },
     delBatch() {
       let ids = this.multipleSelection.map(v => v.id)  // [{}, {}, {}] => [1,2,3]
-      this.request.post("/illegal/del/batch", ids).then(res => {
+      this.request.post("/birth/del/batch", ids).then(res => {
         if (res.code === '200') {
           this.$message.success("批量删除成功")
           this.load()
@@ -224,7 +188,7 @@ export default {
       })
     },
     changeEnable(row) {
-      this.request.post("/illegal/update", row).then(res => {
+      this.request.post("/birth/update", row).then(res => {
         if (res.code === '200') {
           this.$message.success("操作成功")
         } else {
@@ -233,10 +197,9 @@ export default {
       })
     },
     reset() {
-      this.illegalPlace = ""
-      this.illegalActivities = ""
-      this.illegalPerson = ""
-
+      this.name = ""
+      this.idCard = ""
+      this.school = ""
       this.load()
     },
     handleSizeChange(pageSize) {
@@ -250,7 +213,7 @@ export default {
       this.load()
     },
     exp() {
-      window.open("http://localhost:8081/illegal/export")
+      window.open("http://localhost:8081/birth/export")
     },
     handleExcelImportSuccess() {
       this.$message.success("导入成功")
