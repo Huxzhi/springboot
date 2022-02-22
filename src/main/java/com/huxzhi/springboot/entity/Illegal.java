@@ -46,6 +46,12 @@ public class Illegal implements Serializable {
     @ApiModelProperty("违法行为")
     private String illegalActivities;
 
+    @ApiModelProperty("违法人员")
+    private String illegalPerson;
+
+    @ApiModelProperty("违法人员身份证号")
+    private String illegalIdCard;
+
     @ApiModelProperty("罚款金额")
     private String forfeit;
 

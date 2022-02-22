@@ -1,13 +1,15 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-      <el-input style="width: 200px" placeholder="请输入真实姓名" suffix-icon="el-icon-search" v-model="infoname"></el-input>
+      <el-input style="width: 200px" placeholder="请输入真实姓名" suffix-icon="el-icon-search" v-model="order"></el-input>
+      <el-input style="width: 200px" placeholder="请输入身份证号" suffix-icon="el-icon-edit" class="ml-5"
+                v-model="idCard"></el-input>
       <el-input style="width: 200px" placeholder="请输入身份证号" suffix-icon="el-icon-edit" class="ml-5"
                 v-model="idCard"></el-input>
 
+
       <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
       <el-button type="warning" @click="reset">重置</el-button>
-
     </div>
 
     <div style="margin: 10px 0">
@@ -23,70 +25,41 @@
       >
         <el-button type="danger" slot="reference">批量删除 <i class="el-icon-remove-outline"></i></el-button>
       </el-popconfirm>
-      <el-upload action="http://localhost:8081/info/import" :show-file-list="false" accept="xlsx"
+      <el-upload action="http://localhost:8081/illegal/import" :show-file-list="false" accept="xlsx"
                  :on-success="handleExcelImportSuccess" style="display: inline-block">
         <el-button type="primary" class="ml-5">导入 <i class="el-icon-bottom"></i></el-button>
       </el-upload>
       <el-button type="primary" @click="exp" class="ml-5">导出 <i class="el-icon-top"></i></el-button>
-
-      <el-button type="success" @click="clearFilter">清除所有过滤器</el-button>
     </div>
 
-    <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'" ref="filterTable"
+    <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
-      <el-table-column prop="infoname" label="真实姓名" width="80"></el-table-column>
-      <el-table-column prop="age" label="年龄"></el-table-column>
-      <el-table-column prop="gender" label="性别" width="80"></el-table-column>
-      <el-table-column prop="nation" label="民族"></el-table-column>
+      <el-table-column prop="order" label="真实姓名" width="80"></el-table-column>
+      <el-table-column prop="punishmentAuhority" label="年龄"></el-table-column>
+      <el-table-column prop="illegalTime" label="性别" width="80"></el-table-column>
+      <el-table-column prop="illegalPlace" label="民族"></el-table-column>
       <el-table-column prop="idCard" label="身份证号" width="140"></el-table-column>
+      <el-table-column prop="illegalActivities" label="政治面貌"></el-table-column>
+      <el-table-column prop="illegalPerson" label="婚姻状况"></el-table-column>
+      <el-table-column prop="illegalIdCard" label="现居地"></el-table-column>
+      <el-table-column prop="forfeit" label="电话"></el-table-column>
+      <el-table-column prop="otherMeasures" label="电话"></el-table-column>
+      <el-table-column prop="penaltyTime" label="电话"></el-table-column>
+      <el-table-column prop="isAccepted" label="电话"></el-table-column>
+      <el-table-column prop="receiver" label="电话"></el-table-column>
+      <el-table-column prop="isAccepted" label="电话">
 
-      <el-table-column prop="politicalOutlook" label="政治面貌" width="100"
-                       :filters="pfs"
-                       :filter-method="filterPoliticalOutlook"
-                       filter-placement="bottom-end">
-        <template slot-scope="scope">
-          <el-tag
-              :type="scope.row.politicalOutlook === '中国共产党党员' ? 'danger' : 'success'"
-              disable-transitions>{{ scope.row.politicalOutlook }}
-          </el-tag>
-        </template>
-      </el-table-column>
-
-
-      <el-table-column prop="marital" label="婚姻状况" width="100"
-                       :filters="mfs"
-                       :filter-method="filterMarital"
-                       filter-placement="bottom-end"></el-table-column>
-      <el-table-column prop="currentSidence" label="现居地"></el-table-column>
-      <el-table-column prop="phone" label="电话"></el-table-column>
-
-      <el-table-column label="是否为高级技术人才" width="140">
-        <template slot-scope="scope">
-          <el-switch v-model="scope.row.isSeniorTechnician" active-color="#13ce66" inactive-color="#ccc"
-                     @change="changeEnable(scope.row)"></el-switch>
-        </template>
-      </el-table-column>
-      <el-table-column label="是否残疾">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.isDisability" active-color="#13ce66" inactive-color="#ccc"
                      @change="changeEnable(scope.row)"></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="是否军人">
-        <template slot-scope="scope">
-          <el-switch v-model="scope.row.isSoldier" active-color="#13ce66" inactive-color="#ccc"
-                     @change="changeEnable(scope.row)"></el-switch>
-        </template>
-      </el-table-column>
-      <el-table-column label="是否外国人" width="100">
-        <template slot-scope="scope">
-          <el-switch v-model="scope.row.isForeigner" active-color="#13ce66" inactive-color="#ccc"
-                     @change="changeEnable(scope.row)"></el-switch>
-        </template>
-      </el-table-column>
+      <el-table-column label="acceptanceTime" width="140">
 
+      </el-table-column>
+     
 
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
@@ -187,7 +160,7 @@
 
 <script>
 export default {
-  name: "Info",
+  name: "Illegal",
   data() {
     return {
       tableData: [],
@@ -202,31 +175,16 @@ export default {
 
       form: {},
       dialogFormVisible: false,
-      multipleSelection: [],
-      politicalOutlooks: ['群众', '中国共产党党员', '中国共产党预备党员', '中国共产主义青年团团员', '中国国民党革命委员会会员',
-        '中国民主同盟盟员', '中国民主建国会会员', '中国民主促进会会员', '中国农工民主党党员', '中国致公党党员', '九三学社社员',
-        '台湾民主自治同盟盟员', '无党派民主人士'],
-      maritals: ['未婚', '已婚', '丧偶', '离婚'],
 
-      pfs: [],
-      mfs: [],
 
     }
   },
   created() {
     this.load()
-
-    this.politicalOutlooks.forEach(row => {
-      this.pfs.push({'text': row, 'value': row})
-    })
-    this.maritals.forEach(row => {
-      this.mfs.push({'text': row, 'value': row})
-    })
-
   },
   methods: {
     load() {
-      this.request.get("/info/page", {
+      this.request.get("/illegal/page", {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
@@ -236,25 +194,14 @@ export default {
       }).then(res => {
         this.tableData = res.data.records
         this.total = res.data.total
+        console.log(this.form)
       })
-    },
 
-
-    filterPoliticalOutlook(value, row) {
-      return row.politicalOutlook === value;
     },
-
-    filterMarital(value, row) {
-      return row.marital === value;
-    },
-    clearFilter() {
-      this.$refs.filterTable.clearFilter()
-    },
-
     save() {
       //todo
       console.log(this.form)
-      this.request.post("/info", this.form).then(res => {
+      this.request.post("/illegal", this.form).then(res => {
         if (res.code === '200') {
           this.$message.success("保存成功")
           this.dialogFormVisible = false
@@ -274,7 +221,7 @@ export default {
       this.dialogFormVisible = true
     },
     del(id) {
-      this.request.delete("/info/" + id).then(res => {
+      this.request.delete("/illegal/" + id).then(res => {
         if (res.code === '200') {
           this.$message.success("删除成功")
           this.load()
@@ -289,7 +236,7 @@ export default {
     },
     delBatch() {
       let ids = this.multipleSelection.map(v => v.id)  // [{}, {}, {}] => [1,2,3]
-      this.request.post("/info/del/batch", ids).then(res => {
+      this.request.post("/illegal/del/batch", ids).then(res => {
         if (res.code === '200') {
           this.$message.success("批量删除成功")
           this.load()
@@ -299,7 +246,7 @@ export default {
       })
     },
     changeEnable(row) {
-      this.request.post("/info/update", row).then(res => {
+      this.request.post("/illegal/update", row).then(res => {
         if (res.code === '200') {
           this.$message.success("操作成功")
         }
@@ -322,7 +269,7 @@ export default {
       this.load()
     },
     exp() {
-      window.open("http://localhost:8081/info/export")
+      window.open("http://localhost:8081/illegal/export")
     },
     handleExcelImportSuccess() {
       this.$message.success("导入成功")
