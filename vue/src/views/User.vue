@@ -62,7 +62,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="pageNum"
-          :page-sizes="[2, 5, 10, 20]"
+          :page-sizes="[5, 10, 15, 20]"
           :page-size="pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total">
@@ -158,6 +158,7 @@ export default {
       this.form = {}
     },
     handleEdit(row) {
+      //对 对象 进行拷贝
       this.form = JSON.parse(JSON.stringify(row))
       this.dialogFormVisible = true
     },

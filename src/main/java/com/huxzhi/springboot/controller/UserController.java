@@ -130,7 +130,7 @@ public class UserController {
 
         // 获取当前用户信息
         User currentUser = TokenUtils.getCurrentUser();
-        System.out.println("\n获取当前用户信息=====================" + currentUser.getUsername() + "\n");
+        System.out.println("\n当前操作者==========" + currentUser.getUsername() + "=========\n");
 
 
         return Result.success(userService.page(new Page<>(pageNum, pageSize), queryWrapper));
