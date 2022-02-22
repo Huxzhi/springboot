@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-      <el-input style="width: 200px" placeholder="请输入真实姓名" suffix-icon="el-icon-search" v-model="order"></el-input>
+      <el-input style="width: 200px" placeholder="请输入真实姓名" suffix-icon="el-icon-search" v-model="orderId"></el-input>
       <el-input style="width: 200px" placeholder="请输入身份证号" suffix-icon="el-icon-edit" class="ml-5"
                 v-model="idCard"></el-input>
       <el-input style="width: 200px" placeholder="请输入身份证号" suffix-icon="el-icon-edit" class="ml-5"
@@ -36,7 +36,7 @@
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
-      <el-table-column prop="order" label="订单号" width="80"></el-table-column>
+      <el-table-column prop="orderId" label="订单号" width="80"></el-table-column>
       <el-table-column prop="punishmentAuhority" label="处罚机关"></el-table-column>
       <el-table-column prop="illegalTime" label="违法时间" width="80"></el-table-column>
       <el-table-column prop="illegalPlace" label="违法地点"></el-table-column>
@@ -48,7 +48,7 @@
       <el-table-column prop="penaltyTime" label="处罚时间"></el-table-column>
       <el-table-column prop="isAccepted" label="是否受理">
         <template slot-scope="scope">
-          <el-switch v-model="scope.row.isDisability" active-color="#13ce66" inactive-color="#ccc"
+          <el-switch v-model="scope.row.isAccepted" active-color="#13ce66" inactive-color="#ccc"
                      @change="changeEnable(scope.row)"></el-switch>
         </template>
       </el-table-column>
@@ -194,7 +194,7 @@ export default {
 
     },
     save() {
-      //todo
+ 
       console.log(this.form)
       this.request.post("/illegal", this.form).then(res => {
         if (res.code === '200') {
@@ -244,6 +244,8 @@ export default {
       this.request.post("/illegal/update", row).then(res => {
         if (res.code === '200') {
           this.$message.success("操作成功")
+        } else {
+          this.$message.error("操作失败")
         }
       })
     },

@@ -39,8 +39,7 @@ export const resetRouter = () => {
 
 // 注意：刷新页面会导致页面路由重置，已解决，再重置路由即可
 export const setRoutes = () => {
-    //todo login时 从后端请求过来，保存到本地，再从本地读取，有点不安全，设了一个保障，刷新页面重置路由，后续优化一下
-    // 不改了，改起来有点麻烦
+    
     const storeMenus = localStorage.getItem("menus");
     if (storeMenus) {
 

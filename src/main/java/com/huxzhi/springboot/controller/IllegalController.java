@@ -33,6 +33,11 @@ public class IllegalController {
         return Result.success(illegalService.saveOrUpdate(illegal));
     }
 
+    @PostMapping("/update")
+    public Result update(@RequestBody Illegal illegal) {
+        return Result.success(illegalService.updateById(illegal));
+    }
+
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         return Result.success(illegalService.removeById(id));

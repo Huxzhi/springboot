@@ -252,7 +252,7 @@ export default {
     },
 
     save() {
-      //todo
+
       console.log(this.form)
       this.request.post("/info", this.form).then(res => {
         if (res.code === '200') {

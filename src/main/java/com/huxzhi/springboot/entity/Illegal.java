@@ -32,7 +32,7 @@ public class Illegal implements Serializable {
     private Integer id;
 
     @ApiModelProperty("订单号")
-    private String order;
+    private String orderId;
 
     @ApiModelProperty("处罚机关")
     private String punishmentAuhority;

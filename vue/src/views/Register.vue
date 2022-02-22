@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: "Login",
+  name: "Register",
   data() {
     return {
       user: {},
@@ -79,23 +79,7 @@ export default {
     }
   },
   methods: {
-    login() {
-      this.$refs['userForm'].validate((valid) => {
-        if (valid) {  // 表单校验合法
-          if (this.user.password !== this.user.confirmPassword) {
-            this.$message.error("两次输入的密码不一致")
-            return false
-          }
-          this.request.post("/user/register", this.user).then(res => {
-            if (res.code === '200') {
-              this.$message.success("注册成功")
-            } else {
-              this.$message.error(res.msg)
-            }
-          })
-        }
-      });
-    }
+    //todo: 还没写 用户名重复判断
   }
 }
 </script>

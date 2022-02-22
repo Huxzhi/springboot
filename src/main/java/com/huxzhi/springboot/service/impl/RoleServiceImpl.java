@@ -50,7 +50,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 
         for (Integer menuId : menuIds) {
             Menu menu = menuService.getById(menuId);
-            //fixme 前端设计时，tree控件没有传递父级id。 如果是 二级菜单 并且传过来的menuId数组里面没有它的父级id
+
             if (menu.getPid() != null && !menuIdsCopy.contains(menu.getPid())) {
                 // 那么我们就得补上这个父级id
                 RoleMenu roleMenu = new RoleMenu();
