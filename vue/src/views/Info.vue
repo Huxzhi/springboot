@@ -214,7 +214,7 @@ export default {
     }
   },
   created() {
-    this.load()
+
 
     this.politicalOutlooks.forEach(row => {
       this.pfs.push({'text': row, 'value': row})
@@ -222,7 +222,7 @@ export default {
     this.maritals.forEach(row => {
       this.mfs.push({'text': row, 'value': row})
     })
-
+    this.load()
   },
   methods: {
     load() {
