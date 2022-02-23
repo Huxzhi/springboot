@@ -1,11 +1,13 @@
 package com.huxzhi.springboot.service;
 
-import com.huxzhi.springboot.entity.Info;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.huxzhi.springboot.entity.Info;
+
+import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author huxzhi
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IInfoService extends IService<Info> {
 
+    List<Integer> selectAge();
 }

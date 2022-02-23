@@ -1,14 +1,17 @@
 package com.huxzhi.springboot.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.huxzhi.springboot.entity.Info;
 import com.huxzhi.springboot.mapper.InfoMapper;
 import com.huxzhi.springboot.service.IInfoService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author huxzhi
@@ -17,4 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements IInfoService {
 
+    @Resource
+    private InfoMapper infoMapper;
+
+    @Override
+    public List<Integer> selectAge() {
+        return infoMapper.selectAge();
+    }
 }
