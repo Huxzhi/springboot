@@ -70,9 +70,9 @@ public class IllegalController {
     @GetMapping("/page")
     public Result findPage(@RequestParam Integer pageNum,
                            @RequestParam Integer pageSize,
-                           @RequestParam String illegalPlace,
-                           @RequestParam String illegalActivities,
-                           @RequestParam String illegalPerson
+                           @RequestParam(defaultValue = "") String illegalPlace,
+                           @RequestParam(defaultValue = "") String illegalActivities,
+                           @RequestParam(defaultValue = "") String illegalPerson
     ) {
 
         QueryWrapper<Illegal> queryWrapper = new QueryWrapper<>();

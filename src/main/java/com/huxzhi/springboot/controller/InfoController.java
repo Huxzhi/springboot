@@ -71,8 +71,8 @@ public class InfoController {
     @GetMapping("/page")
     public Result findPage(@RequestParam Integer pageNum,
                            @RequestParam Integer pageSize,
-                           @RequestParam String infoname,
-                           @RequestParam String idCard) {
+                           @RequestParam(defaultValue = "") String infoname,
+                           @RequestParam(defaultValue = "") String idCard) {
 
         QueryWrapper<Info> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("id");
@@ -124,7 +124,7 @@ public class InfoController {
         ExcelReader reader = ExcelUtil.getReader(inputStream);
         // 方式1：(推荐) 通过 javabean的方式读取Excel内的对象，但是要求表头必须是英文，跟javabean的属性要对应起来
         List<Info> list = reader.readAll(Info.class);
-        
+
 
         infoService.saveOrUpdateBatch(list);
         return Result.success(true);

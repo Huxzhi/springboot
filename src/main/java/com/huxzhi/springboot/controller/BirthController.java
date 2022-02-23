@@ -70,9 +70,9 @@ public class BirthController {
     @GetMapping("/page")
     public Result findPage(@RequestParam Integer pageNum,
                            @RequestParam Integer pageSize,
-                           @RequestParam String name,
-                           @RequestParam String idCard,
-                           @RequestParam String school) {
+                           @RequestParam(defaultValue = "") String name,
+                           @RequestParam(defaultValue = "") String idCard,
+                           @RequestParam(defaultValue = "") String school) {
 
         QueryWrapper<Birth> queryWrapper = new QueryWrapper<>();
         if (!"".equals(name)) {
