@@ -31,6 +31,12 @@ public class FileController {
     @Value("${files.upload.path}")
     private String fileUploadPath;
 
+    @Value("${server.ip}")
+    private String serverIp;
+
+    @Value("${server.port}")
+    private String serverPort;
+
     @Resource
     private FileMapper fileMapper;
 
@@ -68,7 +74,7 @@ public class FileController {
             // 上传文件到磁盘
             file.transferTo(uploadFile);
             // 数据库若不存在重复文件，则不删除刚才上传的文件
-            url = "http://localhost:8081/file/" + fileUUID;
+            url = "http://" + serverIp + ":" + serverPort + "/api/file/" + fileUUID;
         }
 
 

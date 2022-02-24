@@ -1,0 +1,1 @@
+export const serverIpPort = '8.141.48.181:8081/api'

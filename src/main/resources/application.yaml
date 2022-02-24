@@ -1,6 +1,8 @@
 server:
+  ip: 8.141.48.181 # file控制层使用
   port: 8081
-
+  servlet:
+    context-path: /api
 spring:
   #数据库连接 spring:，已加密
   datasource:
@@ -11,7 +13,7 @@ spring:
     password: ENC(fB55Vo5yN1moCRIm/gBn5AxjQbDWu8NK)
 
     druid:
-      aop-patterns: com.atguigu.admin.*  #监控SpringBean
+      aop-patterns: com.huxzhi.springboot.*  #监控SpringBean
       filters: stat,wall     # 底层开启功能，stat（sql监控），wall（防火墙）
 
       stat-view-servlet: # 配置监控页功能
@@ -19,6 +21,8 @@ spring:
         login-username: admin
         login-password: admin
         resetEnable: false
+        allow: ""
+        deny: ""
 
       web-stat-filter: # 监控web
         enabled: true
@@ -53,8 +57,8 @@ mybatis-plus:
 
 files:
   upload:
-    path: /Users/huxinzhi/Developer/GitHub/Graduation-Design/files/
-
+    # path: /Users/huxinzhi/Developer/GitHub/Graduation-Design/files/
+    path: /home/files/
 
 
 # 加密工具（换成java类了，生成一个 jasyptStringEncryptor 组件放入SpringBoot中，在配置类中 JasyptConfig.java）

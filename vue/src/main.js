@@ -13,6 +13,7 @@ Vue.use(ElementUI, {size: "small"});
 //全局变量
 Vue.prototype.request = request
 
+
 new Vue({
     router,
     store,
