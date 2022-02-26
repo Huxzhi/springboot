@@ -1,1 +1,1 @@
-export const serverIpPort = '8.141.48.181:8081/api'
+export const serverIpPort = 'localhost:8081/api'

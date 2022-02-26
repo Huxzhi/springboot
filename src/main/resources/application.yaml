@@ -1,5 +1,6 @@
 server:
-  ip: 8.141.48.181 # file控制层使用
+  #ip: 8.141.48.181 # file控制层使用
+  ip: localhost
   port: 8081
   servlet:
     context-path: /api
@@ -57,8 +58,8 @@ mybatis-plus:
 
 files:
   upload:
-    # path: /Users/huxinzhi/Developer/GitHub/Graduation-Design/files/
-    path: /home/files/
+    path: /Users/huxinzhi/Developer/GitHub/Graduation-Design/files/
+#    path: /home/files/
 
 
 # 加密工具（换成java类了，生成一个 jasyptStringEncryptor 组件放入SpringBoot中，在配置类中 JasyptConfig.java）
