@@ -234,7 +234,7 @@ export default {
   data() {
     return {
       activeNames: ['1'],
-      id: "17",
+      id: "",
       info: "",  //接受从后端获取的数据,一共4个
       illegals: [],
       residences: [],
