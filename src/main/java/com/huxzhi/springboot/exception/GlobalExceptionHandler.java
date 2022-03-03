@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.SQLException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -14,7 +16,8 @@ public class GlobalExceptionHandler {
      * @param se 业务异常
      * @return Result
      */
-    @ExceptionHandler(ServiceException.class)
+    @ExceptionHandler({ServiceException.class, SQLException.class})
+    
     @ResponseBody
     public Result handle(ServiceException se) {
         return Result.error(se.getCode(), se.getMessage());
