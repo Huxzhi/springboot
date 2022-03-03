@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-button class="ml-5" type="primary" @click="infoIdDialogFormVisible = true">绑定人口记录信息</el-button>
-    <el-button class="ml-5" type="info" @click="load">绑定暂住证记录信息</el-button>
-    <el-button class="ml-5" type="danger" @click="load">绑定违法记录信息</el-button>
-    <el-button class="ml-5" type="success" @click="load">绑定生育记录信息</el-button>
+    <el-button class="ml-5" type="info" @click="residencesIdDialogFormVisible =true">绑定暂住证记录信息</el-button>
+    <el-button class="ml-5" type="danger" @click="illegalIdDialogFormVisible = true">绑定违法记录信息</el-button>
+    <el-button class="ml-5" type="success" @click="birthsIdDialogFormVisible = true">绑定生育记录信息</el-button>
     <div style="height: 1px; background: #ddd; margin: 20px 0;"/>
 
     <div style="margin: 10px 0">
@@ -99,7 +99,7 @@
         <template slot="title">
           <h1> 查看违法记录信息</h1><i class="header-icon el-icon-info"></i>
         </template>
-        <div v-if="illegals!==undefined && illegals.length > 0">
+        <div v-if=" illegals.length > 0">
 
           <el-row :gutter="10" style="margin-bottom: 40px;">
             <el-col v-for="form in illegals" :span="12">
@@ -162,13 +162,13 @@
         <template slot="title">
           <h1> 查看暂住证记录信息</h1><i class="header-icon el-icon-info"></i>
         </template>
-        <div v-if="residences!==undefined && residences.length > 0">
+        <div v-if=" residences.length > 0">
 
           <el-row :gutter="10" style="margin-bottom: 40px;">
             <el-col v-for="form in residences" :span="12">
               <el-card shadow="always" style="margin-bottom: 30px">
                 <div slot="header" class="clearfix">
-                  <span>订单号:  {{ form.orderId }}</span>
+                  <span>订单号:  {{ form.name }}</span>
                   <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
                 </div>
 
@@ -218,13 +218,13 @@
         <template slot="title">
           <h1> 查看生育记录信息</h1><i class="header-icon el-icon-info"></i>
         </template>
-        <div v-if="births!==undefined && births.length > 0">
+        <div v-if=" births.length > 0">
 
           <el-row :gutter="10" style="margin-bottom: 40px;">
             <el-col v-for="form in births" :span="12">
               <el-card shadow="always" style="margin-bottom: 30px">
                 <div slot="header" class="clearfix">
-                  <span>订单号:  {{ form.orderId }}</span>
+                  <span>订单号:  {{ form.name }}</span>
                   <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
                 </div>
 
@@ -265,7 +265,7 @@
 
     </el-collapse>
 
-    <el-dialog title="菜单信息" :visible.sync="infoIdDialogFormVisible" width="30%">
+    <el-dialog title="绑定人口记录信息" :visible.sync="infoIdDialogFormVisible" width="300px">
       <el-form label-width="80px" size="small">
         <el-form-item label="角色Id">
           <el-input v-model="userId" autocomplete="off"></el-input>
@@ -280,6 +280,55 @@
       </div>
     </el-dialog>
 
+
+    <el-dialog title="绑定暂住证记录信息" :visible.sync="residencesIdDialogFormVisible" width="400px">
+      <el-form label-width="125px" size="small">
+        <el-form-item label="角色Id">
+          <el-input v-model="userId" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="暂住证记录信息Id">
+          <el-input v-model="residenceId" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="residencesIdDialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveResidence">确 定</el-button>
+      </div>
+    </el-dialog>
+
+
+    <el-dialog title="绑定违法记录信息" :visible.sync="illegalIdDialogFormVisible" width="400px">
+      <el-form label-width="120px" size="small">
+        <el-form-item label="角色Id">
+          <el-input v-model="userId" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="违法记录信息Id">
+          <el-input v-model="illegalId" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="illegalIdDialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveIllegal">确 定</el-button>
+      </div>
+    </el-dialog>
+
+
+    <el-dialog title="绑定生育记录信息" :visible.sync="birthsIdDialogFormVisible" width="400px">
+      <el-form label-width="120px" size="small">
+        <el-form-item label="角色Id">
+          <el-input v-model="userId" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="生育记录信息Id">
+          <el-input v-model="birthId" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="birthsIdDialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveBirth">确 定</el-button>
+      </div>
+    </el-dialog>
+
+
   </div>
 </template>
 
@@ -288,7 +337,7 @@ export default {
   name: "My",
   data() {
     return {
-      activeNames: [],
+      activeNames: [1],
       id: "",
       info: "",
       illegals: [],
@@ -297,8 +346,8 @@ export default {
       userId: "",
       infoId: "",
       illegalId: "",
-      residencesId: "",
-      birthsId: "",
+      residenceId: "",
+      birthId: "",
 
       infoIdDialogFormVisible: false,
       illegalIdDialogFormVisible: false,
@@ -339,18 +388,82 @@ export default {
         if (res.code === '200') {
           this.$message.success("绑定成功")
           this.id = this.userId
+          this.infoIdDialogFormVisible = false
+          this.activeNames = ['1']
           this.load()
         } else {
-          this.$message.error("绑定失败")
+          this.$message.error("错误代码：" + res.code + "\n绑定失败，" + res.msg)
         }
       })
     },
+    saveIllegal() {
+      this.request.get("/bind/saveillegal", {
+        params: {
+          userId: this.userId,
+          illegalId: this.illegalId
+        }
+      }).then(res => {
+        if (res.code === '200') {
+          this.$message.success("绑定成功")
+          this.id = this.userId
+          this.illegalIdDialogFormVisible = false
+          this.load()
+          this.activeNames = [2]
+        } else {
+          this.$message.error("错误代码：" + res.code + "\n绑定失败，" + res.msg)
+        }
+      })
+    },
+    saveResidence() {
+      this.request.get("/bind/saveresidence", {
+        params: {
+          userId: this.userId,
+          residenceId: this.residenceId
+        }
+      }).then(res => {
+        if (res.code === '200') {
+          this.$message.success("绑定成功")
+          this.id = this.userId
+          this.load()
+          this.residencesIdDialogFormVisible = false
+          this.activeNames = [3]
+        } else {
+          this.$message.error("错误代码：" + res.code + "\n绑定失败，" + res.msg)
+        }
+      })
+    },
+    saveBirth() {
+      this.request.get("/bind/savebirth", {
+        params: {
+          userId: this.userId,
+          birthId: this.birthId
+        }
+      }).then(res => {
+        if (res.code === '200') {
+          this.$message.success("绑定成功")
+          this.id = this.userId
+          this.activeNames = [4]
+          this.birthsIdDialogFormVisible = false
+          this.id = this.userId
+          this.load()
 
+        } else {
+          this.$message.error("错误代码：" + res.code + "\n绑定失败，" + res.msg)
+        }
+      })
+    },
+    reset() {
+      this.info = ""
+      this.illegals = []
+      this.residences = []
+      this.births = []
+      this.activeNames = []
+    },
 
     load() {
       this.request.get("/my", {
         params: {
-          id: this.userId
+          id: this.id
         }
       }).then(res => {
         this.info = res.data.info
@@ -358,6 +471,7 @@ export default {
         this.residences = res.data.residences
         this.births = res.data.births
         this.activeNames = ['1']
+
       })
     }
   }
