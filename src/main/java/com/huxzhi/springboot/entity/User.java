@@ -30,7 +30,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("id")
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO) //可以获取自增主键
     private Integer id;
 
     @ApiModelProperty("用户名")
