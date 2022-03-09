@@ -20,4 +20,7 @@ public interface MyMapper {
     @Select("select id_birth from fp_user_birth where id_user = #{id_user}")
     List<Integer> getMyBirth(@Param("id_user") Integer id_user);
 
+    @Select("SELECT COUNT( * ) FROM  fp_user_illegal\t u  LEFT OUTER JOIN fp_illegal r on u.id_illegal =r.id  WHERE r.is_accepted = 0 and u.id_user= #{id_user};")
+    Integer selectIllegal(@Param("id_user") Integer id_user);
+
 }
