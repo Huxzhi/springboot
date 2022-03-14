@@ -42,7 +42,31 @@ const routes = [
                 path: 'cityinfo',
                 name: 'CityInfo',
                 component: () => import('../views/front/CityInfo.vue')
-            },
+            }, {
+                path: 'postresidence',
+                name: 'PostResidence',
+                component: () => import('../views/front/PostResidence.vue')
+            }, {
+                path: 'handleillegal',
+                name: 'HandleIllegal',
+                component: () => import('../views/front/HandleIllegal.vue')
+            }, {
+                path: 'info',
+                name: 'FrontInfo',
+                component: () => import('../views/front/Info.vue')
+            }, {
+                path: 'illegal',
+                name: 'FrontIllegal',
+                component: () => import('../views/front/Illegal.vue')
+            }, {
+                path: 'residence',
+                name: 'FrontResidence',
+                component: () => import('../views/front/Residence.vue')
+            }, {
+                path: 'birth',
+                name: 'FrontBirth',
+                component: () => import('../views/front/Birth.vue')
+            }
         ]
     },
 ]

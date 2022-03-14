@@ -33,14 +33,16 @@
 
           <el-submenu index="3">
             <template slot="title">个人信息查询</template>
-            <el-menu-item index="2-1">人口基本信息</el-menu-item>
-            <el-menu-item index="2-2">生育信息</el-menu-item>
+            <el-menu-item index="/front/info">人口基本信息</el-menu-item>
+            <el-menu-item index="/front/illegal">违法记录信息</el-menu-item>
+            <el-menu-item index="/front/residence">暂住证记录信息</el-menu-item>
+            <el-menu-item index="/front/birth">生育记录信息</el-menu-item>
           </el-submenu>
 
           <el-submenu index="4">
             <template slot="title">申请处理</template>
-            <el-menu-item index="2-1">申请暂住证</el-menu-item>
-            <el-menu-item index="2-2">处理违法记录</el-menu-item>
+            <el-menu-item index="/front/postresidence">申请暂住证</el-menu-item>
+            <el-menu-item index="/front/handleillegal">处理违法记录</el-menu-item>
           </el-submenu>
 
 
