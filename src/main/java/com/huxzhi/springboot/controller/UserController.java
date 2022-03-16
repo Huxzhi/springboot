@@ -52,8 +52,10 @@ public class UserController {
         return Result.success(dto);
     }
 
+
     @PostMapping("/register")
     public Result register(@RequestBody UserDTO userDTO) {
+        //  其他属性不是强制的
         String username = userDTO.getUsername();
         String password = userDTO.getPassword();
         if (StrUtil.isBlank(username) || StrUtil.isBlank(password)) {
