@@ -1,4 +1,4 @@
-package com.huxzhi.springboot.interceptor;
+package com.huxzhi.springboot.config.interceptor;
 
 import cn.hutool.core.util.StrUtil;
 import com.auth0.jwt.JWT;
@@ -7,6 +7,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.huxzhi.springboot.common.Constants;
+import com.huxzhi.springboot.config.AuthAccess;
 import com.huxzhi.springboot.entity.User;
 import com.huxzhi.springboot.exception.ServiceException;
 import com.huxzhi.springboot.service.IUserService;
@@ -28,6 +29,12 @@ public class JwtInterceptor implements HandlerInterceptor {
         // 如果不是映射到方法直接通过
         if (!(handler instanceof HandlerMethod)) {
             return true;
+        } else {
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+            AuthAccess authAccess = handlerMethod.getMethodAnnotation(AuthAccess.class);
+            if (authAccess != null) {
+                return true;
+            }
         }
         // 执行认证
         if (StrUtil.isBlank(token)) {

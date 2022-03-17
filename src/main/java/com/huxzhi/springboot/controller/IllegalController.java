@@ -6,9 +6,12 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.huxzhi.springboot.common.Result;
 import com.huxzhi.springboot.entity.Illegal;
+import com.huxzhi.springboot.mapper.IllegalMapper;
+import com.huxzhi.springboot.mapper.MyMapper;
 import com.huxzhi.springboot.service.IIllegalService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +37,31 @@ public class IllegalController {
 
     @Resource
     private IIllegalService illegalService;
+    @Resource
+    private MyMapper myMapper;
+    @Resource
+    private IllegalMapper illegalMapper;
+
+    //补充，新增未处理的已处理的违法记录
+    @GetMapping("/handle/{id}")
+    public Result findHandleOne(@PathVariable Integer id) {
+        return Result.success(illegalService.getById(id));
+    }
+
+    @GetMapping("/mishandle/{id}")
+    public Result findMishandleOne(@PathVariable Integer id) {
+        return Result.success(myMapper.getUserIllegal(id));
+    }
+
+    @PostMapping("/accept")
+    public Result accept(@RequestBody Integer id) {
+
+        UpdateWrapper<Illegal> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("id", id).set("is_accepted", 1);
+        illegalMapper.update(null, updateWrapper);
+        return Result.success();
+    }
+
 
     //新增或者更新
     @PostMapping

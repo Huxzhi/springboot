@@ -1,9 +1,8 @@
 <template>
   <div>
-
     <el-row>
       <el-col :span="20">
-        <el-card :body-style="{ padding: '0px' }" style="margin-left: auto;margin-right: auto">
+        <el-card :body-style="{ padding: '0px' }" style="margin-left: auto;margin-right: auto;padding: 20px">
           <div slot="header" class="clearfix">
             申请注意事项
           </div>
@@ -30,7 +29,7 @@
           <br/>
           　<h2>　三、极速办理条件</h2><br/>
           　　(一)不存在违法记录即可
-
+          <br><br><br>
           <el-button type="primary" @click="handleAdd" class="button bottom">
 
             <i class="el-icon-circle-plus-outline"></i>
@@ -39,22 +38,20 @@
         </el-card>
       </el-col>
     </el-row>
-
-
     <el-dialog title="暂住证记录信息" :visible.sync="dialogFormVisible" width="40%">
       <el-form label-width="100px" size="small" :model="form" :rules="rules">
         <el-form-item label="姓名">
-          <el-input v-model="form.name" autocomplete="off" minlength="2"></el-input>
+          <el-input v-model="form.name" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="性别">
-          <el-radio v-model="form.gender" label="男" value="男">男</el-radio>
-          <el-radio v-model="form.gender" label="女" value="女">女</el-radio>
+          <el-radio v-model="form.gender" label="男" value="男" :disabled="true">男</el-radio>
+          <el-radio v-model="form.gender" label="女" value="女" :disabled="true">女</el-radio>
         </el-form-item>
         <el-form-item label="身份证号">
-          <el-input v-model="form.idCard" autocomplete="off" minlength="18" maxlength="18" show-word-limit></el-input>
+          <el-input v-model="form.idCard" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="年龄">
-          <el-input v-model="form.age" autocomplete="off"></el-input>
+          <el-input v-model="form.age" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="从业学位及职业">
           <el-input v-model="form.occupation" autocomplete="off" minlength="2"></el-input>
@@ -104,9 +101,23 @@ export default {
   },
   methods: {
     handleAdd() {
-      this.dialogFormVisible = true
+
       this.form = {}
       this.form.userId = JSON.parse(localStorage.getItem("user")).id
+      this.request.get("/info/" + this.form.userId).then(res => {
+        if (res.code === '200') {
+          this.$message.success("读取成功")
+          this.form.name = res.data.infoname
+          this.form.gender = res.data.gender
+          this.form.idCard = res.data.idCard
+          this.form.age = res.data.age
+          this.dialogFormVisible = true
+        } else {
+          this.$message.error("错误代码" + res.code + "\n读取失败," + res.msg)
+        }
+      })
+
+
       this.form.timeStart = this.formatTime()
       this.form.timeEnd = this.formatTime(new Date().valueOf() + 180 * 24 * 60 * 60 * 1000)
 
