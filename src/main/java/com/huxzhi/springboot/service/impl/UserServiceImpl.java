@@ -70,9 +70,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     //返回 User 实体，保存到数据库的
     public User register(UserDTO userDTO) {
-        User one = getUserInfo(userDTO);
-        if (one == null) {
-            one = new User();
+        User one = new User();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", userDTO.getUsername());
+        count(queryWrapper);
+        if (count(queryWrapper) == 0) {
+
             BeanUtil.copyProperties(userDTO, one, true);
             // 默认一个普通用户的角色
             one.setRole(RoleEnum.ROLE_USER.toString());

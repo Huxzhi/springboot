@@ -4,6 +4,7 @@ import store from "@/store";
 
 Vue.use(VueRouter)
 
+//静态路由
 const routes = [
     {
         path: '/login',
@@ -19,6 +20,54 @@ const routes = [
         path: '/404',
         name: '404',
         component: () => import('../views/404.vue')
+    },
+    {
+        path: '/front',
+        name: 'Front',
+        component: () => import('../views/front/Front.vue'),
+        children: [
+            {
+                path: 'home',
+                name: 'FrontHome',
+                component: () => import('../views/front/Home.vue')
+            }, {
+                path: 'person',
+                name: 'FrontPerson',
+                component: () => import('../views/front/Person.vue')
+            }, {
+                path: 'password',
+                name: 'FrontPassword',
+                component: () => import('../views/front/Password.vue')
+            }, {
+                path: 'cityinfo',
+                name: 'CityInfo',
+                component: () => import('../views/front/CityInfo.vue')
+            }, {
+                path: 'postresidence',
+                name: 'PostResidence',
+                component: () => import('../views/front/PostResidence.vue')
+            }, {
+                path: 'handleillegal',
+                name: 'HandleIllegal',
+                component: () => import('../views/front/HandleIllegal.vue')
+            }, {
+                path: 'info',
+                name: 'FrontInfo',
+                component: () => import('../views/front/Info.vue')
+            }, {
+                path: 'illegal',
+                name: 'FrontIllegal',
+                component: () => import('../views/front/Illegal.vue')
+            }, {
+                path: 'residence',
+                name: 'FrontResidence',
+                component: () => import('../views/front/Residence.vue')
+            }, {
+                path: 'birth',
+                name: 'FrontBirth',
+                component: () => import('../views/front/Birth.vue')
+            }
+        ]
     },
 ]
 
@@ -39,7 +88,7 @@ export const resetRouter = () => {
 
 // 注意：刷新页面会导致页面路由重置，已解决，再重置路由即可
 export const setRoutes = () => {
-    
+
     const storeMenus = localStorage.getItem("menus");
     if (storeMenus) {
 

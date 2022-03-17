@@ -29,7 +29,7 @@
                     v-model="user.confirmPassword"></el-input>
         </el-form-item>
         <el-form-item style="margin: 5px 0; text-align: right">
-          <el-button type="primary" size="small" autocomplete="off" @click="login">注册</el-button>
+          <el-button type="primary" size="small" autocomplete="off" @click="register">注册</el-button>
           <el-button type="warning" size="small" autocomplete="off" @click="$router.push('/login')">返回登录</el-button>
         </el-form-item>
       </el-form>
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+
 export default {
   name: "Register",
   data() {
@@ -79,7 +80,18 @@ export default {
     }
   },
   methods: {
-    //todo: 还没写 用户名重复判断
+
+    register() {
+      this.request.post("/user/register", this.user).then(res => {
+        if (res.code === '200') {
+          this.$message.success("注册成功")
+          this.router.push("/login")
+        } else {
+          this.$message.error("error:" + res.code + "\nmsg:" + res.msg)
+        }
+      })
+    }
+
   }
 }
 </script>
