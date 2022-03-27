@@ -8,39 +8,55 @@
       </div>
     </div>
 
-   <div style="margin: 20px 0">
-     <mavon-editor
-         class="md"
-         :value="article.content"
-         :subfield="false"
-         :defaultOpen="'preview'"
-         :toolbarsFlag="false"
-         :editable="false"
-         :scrollStyle="true"
-         :ishljs="true"
-     />
-   </div>
+    <div style="margin: 20px 0">
+      <mavon-editor
+          class="md"
+          :value="article.content"
+          :subfield="false"
+          :defaultOpen="'preview'"
+          :toolbarsFlag="false"
+          :editable="false"
+          :scrollStyle="true"
+          :ishljs="true"
+      />
+    </div>
 
     <div style="margin: 30px 0">
       <div style="margin: 10px 0">
-        <div style="border-bottom: 1px solid orangered; padding: 10px 0; font-size: 20px">评论</div>
-        <div style="padding: 10px 0">
-          <el-input size="small" type="textarea" v-model="commentForm.content"></el-input>
+        <div style=" padding: 10px 0; font-size: 20px">
+          {{ comments.length }} 评论
         </div>
-        <div class="pd-10" style="text-align: right">
-          <el-button type="primary" size="small" @click="save">评论</el-button>
+        <div style="padding: 10px 0 ;display: flex">
+          <div style="width: 100px; text-align: center">
+            <el-image :src="user.avatarUrl" style="width: 50px; height: 50px; border-radius: 50%"></el-image>
+          </div> <!--  头像-->
+
+          <div style="flex: 1">
+            <el-input size="small" type="textarea" style="color: #f4f5f7;"
+                      v-model="commentForm.content"></el-input>
+            <div class="pd-10" style="text-align: right ;margin-left: 8px">
+              <el-button style="height:100%" type="primary" size="small" @click="save">评论</el-button>
+            </div>
+
+            <el-divider></el-divider>
+
+          </div>
+
+
         </div>
+
+
       </div>
 
-<!--      评论列表-->
+      <!--      评论列表-->
       <div>
-        <div v-for="item in comments" :key="item.id" style="border-bottom: 1px solid #ccc; padding: 10px 0; ">
+        <div v-for="item in comments" :key="item.id" style=" padding: 10px 0; ">
           <div style="display: flex">
             <div style="width: 100px; text-align: center">
               <el-image :src="item.avatarUrl" style="width: 50px; height: 50px; border-radius: 50%"></el-image>
             </div> <!--  头像-->
             <div style="flex: 1; font-size: 14px; padding: 5px 0; line-height: 25px">
-              <b>{{ item.nickname }}：</b>
+              <b style="color: #f96b99">{{ item.nickname }}：</b><br>
               <span>{{ item.content }}</span>
 
               <div style="display: flex; line-height: 20px; margin-top: 5px">
@@ -49,22 +65,25 @@
                 </div>
                 <div style="text-align: right; flex: 1">
                   <el-button style="margin-left: 5px" type="text" @click="handleReply(item.id)">回复</el-button>
-                  <el-button type="text" style="color: red" @click="del(item.id)" v-if="user.id === item.userId">删除</el-button>
+                  <el-button type="text" style="color: red" @click="del(item.id)" v-if="user.id === item.userId">删除
+                  </el-button>
                 </div>
               </div>
             </div>   <!--  内容-->
           </div>
 
-          <div v-if="item.children.length"  style="padding-left: 200px;">
-            <div v-for="subItem in item.children" :key="subItem.id"  style="background-color: #f0f0f0; padding: 5px 20px">
+          <div v-if="item.children.length" style="padding-left: 100px;">
+            <div v-for="subItem in item.children" :key="subItem.id"
+                 style="background-color: #f0f0f0; padding: 5px 20px">
               <!--          回复列表-->
               <div style="font-size: 14px; padding: 5px 0; line-height: 25px">
                 <div>
-                  <b style="color: #3a8ee6" v-if="subItem.pnickname">@{{ subItem.pnickname }}</b>
                 </div>
                 <div style="padding-left: 5px">
-                  <b>{{ subItem.nickname }}：</b>
-                  <span>{{ subItem.content }}</span>
+                  <b style="color: #f96b99">{{ subItem.nickname }}</b> 回复
+                  <b style="color: #3a8ee6" v-if="subItem.pnickname">@{{ subItem.pnickname }} </b>
+
+                  <span>: {{ subItem.content }}</span>
                 </div>
 
                 <div style="display: flex; line-height: 20px; margin-top: 5px; padding-left: 5px">
@@ -73,12 +92,14 @@
                   </div>
                   <div style="text-align: right; flex: 1">
                     <el-button style="margin-left: 5px" type="text" @click="handleReply(subItem.id)">回复</el-button>
-                    <el-button type="text" style="color: red" @click="del(subItem.id)" v-if="user.id === subItem.userId">删除</el-button>
+                    <el-button type="text" style="color: red" @click="del(subItem.id)"
+                               v-if="user.id === subItem.userId">删除
+                    </el-button>
                   </div>
                 </div>
               </div>   <!--  内容-->
             </div>
-
+            <el-divider></el-divider>
           </div>
 
 
@@ -87,7 +108,7 @@
     </div>
 
 
-    <el-dialog title="回复" :visible.sync="dialogFormVisible" width="50%" >
+    <el-dialog title="回复" :visible.sync="dialogFormVisible" width="50%">
       <el-form label-width="80px" size="small">
         <el-form-item label="回复内容">
           <el-input type="textarea" v-model="commentForm.contentReply" autocomplete="off"></el-input>
@@ -95,7 +116,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="save"  size="small">确 定</el-button>
+        <el-button type="primary" @click="save" size="small">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -162,7 +183,7 @@ export default {
       })
     },
     handleReply(pid) {
-      this.commentForm = { pid: pid }
+      this.commentForm = {pid: pid}
       this.dialogFormVisible = true
     }
   }
@@ -170,5 +191,10 @@ export default {
 </script>
 
 <style scoped>
-
+span {
+  line-height: 20px;
+  padding: 2px 0;
+  font-size: 14px;
+  color: #222;
+}
 </style>
