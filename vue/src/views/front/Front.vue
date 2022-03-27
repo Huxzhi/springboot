@@ -46,7 +46,7 @@
           </el-submenu>
 
 
-          <el-menu-item index="3">消息中心</el-menu-item>
+          <el-menu-item index="/front/article">文章列表</el-menu-item>
           <!--          <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>-->
         </el-menu>
         <div class="line"></div>
