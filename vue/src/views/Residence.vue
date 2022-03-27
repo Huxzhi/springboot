@@ -39,7 +39,7 @@
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
       <el-table-column prop="name" label="姓名" width="80"></el-table-column>
       <el-table-column prop="idCard" label="身份证号" width="150"></el-table-column>
-      <el-table-column prop="age" label="年龄" width="80"></el-table-column>
+
       <el-table-column prop="gender" label="性别" width="80"></el-table-column>
       <el-table-column prop="occupation" label="从业学位及职业" width="120"></el-table-column>
       <el-table-column prop="work" label="原工作单位" width="100"></el-table-column>
@@ -90,9 +90,7 @@
         <el-form-item label="身份证号">
           <el-input v-model="form.idCard" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="年龄">
-          <el-input v-model="form.age" autocomplete="off"></el-input>
-        </el-form-item>
+
         <el-form-item label="从业学位及职业">
           <el-input v-model="form.occupation" autocomplete="off"></el-input>
         </el-form-item>

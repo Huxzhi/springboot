@@ -3,6 +3,12 @@ server:
   port: 8081
   servlet:
     context-path: /api
+
+files:
+  upload:
+    path: /Users/huxinzhi/Developer/GitHub/Graduation-Design/files/
+    #    path: /home/files/
+
 spring:
   #数据库连接 spring:，已加密
   datasource:

@@ -31,6 +31,8 @@
             <el-menu-item index="2-2">最新政策</el-menu-item>
           </el-submenu>
 
+          <el-menu-item index="/front/article">文章列表</el-menu-item>
+
           <el-submenu index="3">
             <template slot="title">个人信息查询</template>
             <el-menu-item index="/front/info">人口基本信息</el-menu-item>
@@ -46,7 +48,6 @@
           </el-submenu>
 
 
-          <el-menu-item index="/front/article">文章列表</el-menu-item>
           <!--          <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>-->
         </el-menu>
         <div class="line"></div>
