@@ -66,7 +66,17 @@ const routes = [
                 path: 'birth',
                 name: 'FrontBirth',
                 component: () => import('../views/front/Birth.vue')
-            }
+            },
+            {
+                path: 'article',
+                name: 'FrontArticle',
+                component: () => import('../views/front/Article')
+            },
+            {
+                path: 'articleDetail',
+                name: 'ArticleDetail',
+                component: () => import('../views/front/ArticleDetail')
+            },
         ]
     },
 ]
