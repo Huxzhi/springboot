@@ -74,10 +74,12 @@ public class CommentController {
         List<Comment> articleComments = commentService.findCommentDetail(articleId);  // 查询所有的评论和回复数据
         // 查询评论数据（不包括回复）
         List<Comment> originList = articleComments.stream().filter(comment -> comment.getOriginId() == null).collect(Collectors.toList());
-
         // 设置评论数据的子节点，也就是回复内容
         for (Comment origin : originList) {
-            List<Comment> comments = articleComments.stream().filter(comment -> origin.getId().equals(comment.getOriginId())).collect(Collectors.toList());  // 表示回复对象集合
+            List<Comment> comments = articleComments.stream()
+                    .filter(comment -> origin.getId()
+                            .equals(comment.getOriginId()))
+                    .collect(Collectors.toList());  // 表示回复对象集合
             comments.forEach(comment -> {
                 Optional<Comment> pComment = articleComments.stream().filter(c1 -> c1.getId().equals(comment.getPid())).findFirst();  // 找到当前评论的父级
                 pComment.ifPresent((v -> {  // 找到父级评论的用户id和用户昵称，并设置给当前的回复对象

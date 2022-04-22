@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.Quarter;
 import com.huxzhi.springboot.common.Result;
 import com.huxzhi.springboot.entity.Illegal;
+import com.huxzhi.springboot.mapper.InfoMapper;
 import com.huxzhi.springboot.service.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,8 @@ public class EchartsController {
     private IIllegalService illegalService;
     @Resource
     private IBirthService birthService;
+    @Resource
+    private InfoMapper infoMapper;
 
 
     @GetMapping("/total")
@@ -41,7 +44,6 @@ public class EchartsController {
         map.put("birthCount", birthService.count() + "");
         return Result.success(map);
     }
-
 
     @GetMapping("/illegalRecord")
     public Result get() {
@@ -95,5 +97,34 @@ public class EchartsController {
 
         return Result.success(CollUtil.newArrayList(q1, q2, q3, q4));
     }
+
+    @GetMapping("/political")
+    public Result political() {
+
+        Integer qun = infoService.columnCount("political_outlook", "群众");
+        Integer tuan = infoService.columnCount("political_outlook", "中国共产主义青年团团员");
+        Integer dy = infoService.columnCount("political_outlook", "中国共产党党员");
+        Integer it = infoService.count() - qun - tuan - dy;
+
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("qun", qun + "");
+        map.put("tuan", tuan + "");
+        map.put("dy", dy + "");
+        map.put("it", it + "");
+        return Result.success(map);
+    }
+
+    @GetMapping("/gender")
+    public Result gender() {
+
+        List<Integer> list = infoService.selectAge();
+        Integer f = infoService.columnCount("gender", "男");
+        Integer m = infoService.columnCount("gender", "女");
+
+        return Result.success(CollUtil.newArrayList(f, m));
+    }
+
 
 }

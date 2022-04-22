@@ -5,7 +5,7 @@
       <!--      轮播图-->
       <el-carousel height="450px" :interval="10000">
         <el-carousel-item v-for="item in imgs" :key="item">
-          <img :src="item" alt="" style="width: 100%">
+          <img :src="item.url" alt="" style="width: 100%">
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -59,13 +59,16 @@ export default {
   name: "FrontHome",
   data() {
     return {
-      imgs: [
-        'http://www.xuanchuanpianpaishe.com/uploads/allimg/180904/1-1PZ4115303W5.jpg',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbRPzYGVHTOe0y0eiZ7nv1CQVlje5eeRCA_ZTzoRUxB-FYoU-O17ZQcOsvLPDnPK7QDm0&usqp=CAU'
-      ],
+      imgs: [],
       files: []
     }
   }, created() {
+
+    this.request.get("/file/ad").then(res => {
+      this.imgs = res.data
+    })
+
+
     this.request.get("/file/front/all").then(res => {
       console.log(res.data)
       this.files = res.data.filter(v => v.type === 'png' || v.type === 'jpg')

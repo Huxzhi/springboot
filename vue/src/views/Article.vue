@@ -103,7 +103,8 @@
 <script>
 
 import axios from "axios";
-import {serverIpPort} from "../../dist/config";
+import {serverIpPort} from "../../public/config";
+
 
 export default {
   name: "Article",
