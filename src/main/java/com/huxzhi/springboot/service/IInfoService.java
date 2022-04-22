@@ -16,4 +16,7 @@ import java.util.List;
 public interface IInfoService extends IService<Info> {
 
     List<Integer> selectAge();
+
+    Integer columnCount(String column, String val);
+
 }

@@ -17,12 +17,10 @@ request.interceptors.request.use(config => {
     if (user) {
         config.headers['token'] = user.token;  // 设置请求头
     }
-
     return config
 }, error => {
     return Promise.reject(error)
 });
-
 // response 拦截器
 // 可以在接口响应后统一处理结果
 request.interceptors.response.use(

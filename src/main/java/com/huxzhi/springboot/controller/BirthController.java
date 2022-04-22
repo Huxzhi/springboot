@@ -35,7 +35,7 @@ public class BirthController {
     @Resource
     private IBirthService birthService;
 
-    //新增或者更新
+    // 新增或者更新
     @PostMapping
     public Result save(@RequestBody Birth birth) {
         return Result.success(birthService.saveOrUpdate(birth));
@@ -56,7 +56,7 @@ public class BirthController {
         return Result.success(birthService.removeByIds(ids));
     }
 
-    //查询所有数据
+    // 查询所有数据
     @GetMapping
     public Result findAll() {
         return Result.success(birthService.list());
@@ -69,10 +69,10 @@ public class BirthController {
 
     @GetMapping("/page")
     public Result findPage(@RequestParam Integer pageNum,
-                           @RequestParam Integer pageSize,
-                           @RequestParam(defaultValue = "") String name,
-                           @RequestParam(defaultValue = "") String idCard,
-                           @RequestParam(defaultValue = "") String school) {
+            @RequestParam Integer pageSize,
+            @RequestParam(defaultValue = "") String name,
+            @RequestParam(defaultValue = "") String idCard,
+            @RequestParam(defaultValue = "") String school) {
 
         QueryWrapper<Birth> queryWrapper = new QueryWrapper<>();
         if (!"".equals(name)) {
@@ -84,7 +84,7 @@ public class BirthController {
         if (!"".equals(school)) {
             queryWrapper.like("school", school);
         }
-        //进行倒序输出
+        // 进行倒序输出
         queryWrapper.orderByDesc("id");
         return Result.success(birthService.page(new Page<>(pageNum, pageSize), queryWrapper));
     }
@@ -127,4 +127,3 @@ public class BirthController {
     }
 
 }
-

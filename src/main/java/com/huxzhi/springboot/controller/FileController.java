@@ -7,6 +7,7 @@ import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.huxzhi.springboot.common.Result;
+import com.huxzhi.springboot.config.AuthAccess;
 import com.huxzhi.springboot.entity.Files;
 import com.huxzhi.springboot.mapper.FileMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -110,6 +111,17 @@ public class FileController {
         os.write(FileUtil.readBytes(uploadFile));
         os.flush();
         os.close();
+    }
+
+    @GetMapping("/ad")
+    @AuthAccess
+    public Result getAd() {
+        QueryWrapper<Files> queryWrapper = new QueryWrapper<>();
+        // 查询未删除的记录
+        queryWrapper.like("name", "ad");
+        queryWrapper.eq("is_delete", false);
+        queryWrapper.eq("enable", true);
+        return Result.success(fileMapper.selectList(queryWrapper));
     }
 
 

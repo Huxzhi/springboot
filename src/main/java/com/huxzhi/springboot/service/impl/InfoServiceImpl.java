@@ -1,5 +1,6 @@
 package com.huxzhi.springboot.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.huxzhi.springboot.entity.Info;
 import com.huxzhi.springboot.mapper.InfoMapper;
@@ -27,4 +28,13 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements II
     public List<Integer> selectAge() {
         return infoMapper.selectAge();
     }
+
+  
+    @Override
+    public Integer columnCount(String column, String val) {
+        QueryWrapper<Info> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like(column, val);
+        return infoMapper.selectCount(queryWrapper);
+    }
+
 }
