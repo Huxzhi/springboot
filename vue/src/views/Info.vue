@@ -87,6 +87,8 @@
         </template>
       </el-table-column>
 
+      <el-table-column prop="hometown" label="籍贯"></el-table-column>
+      <el-table-column prop="emergency" label="紧急联系人" width="140"></el-table-column>
 
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
@@ -173,6 +175,13 @@
         <el-form-item label="是否外国人">
           <el-radio v-model="form.isForeigner" :label=true>是</el-radio>
           <el-radio v-model="form.isForeigner" :label=false>否</el-radio>
+        </el-form-item>
+
+        <el-form-item label="籍贯">
+          <el-input v-model="form.hometown" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="紧急联系人">
+          <el-input v-model="form.emergency" autocomplete="off"></el-input>
         </el-form-item>
 
 
