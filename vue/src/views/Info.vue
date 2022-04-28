@@ -191,6 +191,32 @@
         <el-button type="primary" @click="save">确 定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog title="根据以下的类别进行导出" :visible.sync="dialogFormVisibleExport" width="30%">
+      <el-form label-width="100px" size="small">
+        <el-form-item label="性别">
+          <el-input v-model="expgender" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="民族">
+          <el-input v-model="expnation" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="政治面貌">
+          <el-input v-model="exppoliticalOutlook" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="婚姻状况">
+          <el-input v-model="expmarital" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="籍贯">
+          <el-input v-model="exphometown" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisibleExport = false">取 消</el-button>
+        <el-button type="primary" @click="exportForm">确 定</el-button>
+      </div>
+    </el-dialog>
+
+
   </div>
 </template>
 
@@ -208,11 +234,16 @@ export default {
       infoname: "",
       idCard: "",
 
-      zhen: true,
-      jia: false,
+      //导出
+      expgender: "",
+      expnation: "",
+      expmarital: "",
+      exphometown: "",
+      exppoliticalOutlook: "",
 
       form: {},
       dialogFormVisible: false,
+      dialogFormVisibleExport: false,
       multipleSelection: [],
       politicalOutlooks: ['群众', '中国共产党党员', '中国共产党预备党员', '中国共产主义青年团团员', '中国国民党革命委员会会员',
         '中国民主同盟盟员', '中国民主建国会会员', '中国民主促进会会员', '中国农工民主党党员', '中国致公党党员', '九三学社社员',
@@ -334,8 +365,21 @@ export default {
       this.load()
     },
     exp() {
-      window.open("http://" + serverIpPort + "/info/export")
+      this.dialogFormVisibleExport = true
     },
+    exportForm() {
+
+      let url = "http://" + serverIpPort + "/info/export?" +
+          "gender=" + this.expgender +
+          "&nation=" + this.expnation +
+          "&politicalOutlook=" + this.exppoliticalOutlook +
+          "&hometown=" + this.exphometown +
+          "&marital=" + this.expmarital
+
+      window.open(url)
+    },
+
+
     handleExcelImportSuccess() {
       this.$message.success("导入成功")
       this.load()

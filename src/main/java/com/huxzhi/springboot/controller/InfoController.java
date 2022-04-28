@@ -8,6 +8,7 @@ import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.huxzhi.springboot.common.Result;
+import com.huxzhi.springboot.config.AuthAccess;
 import com.huxzhi.springboot.entity.Info;
 import com.huxzhi.springboot.service.IInfoService;
 import org.springframework.web.bind.annotation.*;
@@ -89,10 +90,34 @@ public class InfoController {
     /**
      * 导出接口
      */
+    @AuthAccess
     @GetMapping("/export")
-    public void export(HttpServletResponse response) throws Exception {
+    public void export(HttpServletResponse response,
+                       @RequestParam(defaultValue = "") String gender,
+                       @RequestParam(defaultValue = "") String nation,
+                       @RequestParam(defaultValue = "") String politicalOutlook,
+                       @RequestParam(defaultValue = "") String marital,
+                       @RequestParam(defaultValue = "") String hometown) throws Exception {
         // 从数据库查询出所有的数据
-        List<Info> list = infoService.list();
+        QueryWrapper<Info> queryWrapper = new QueryWrapper<>();
+
+        if (!"".equals(gender)) {
+            queryWrapper.like("gender", gender);
+        }
+        if (!"".equals(nation)) {
+            queryWrapper.like("nation", nation);
+        }
+        if (!"".equals(politicalOutlook)) {
+            queryWrapper.like("political_outlook", politicalOutlook);
+        }
+        if (!"".equals(marital)) {
+            queryWrapper.like("marital", marital);
+        }
+        if (!"".equals(hometown)) {
+            queryWrapper.like("hometown", hometown);
+        }
+
+        List<Info> list = infoService.list(queryWrapper);
         // 在内存操作，写出到浏览器
         ExcelWriter writer = ExcelUtil.getWriter(true);
         //自定义标题别名
