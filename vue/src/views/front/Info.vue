@@ -66,6 +66,13 @@
             <el-radio v-model="info.isForeigner" :label=false>否</el-radio>
           </el-form-item>
 
+          <el-form-item label="籍贯">
+            <el-input v-model="info.hometown" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="紧急联系人">
+            <el-input v-model="info.emergency" autocomplete="off"></el-input>
+          </el-form-item>
+
 
         </el-form>
 

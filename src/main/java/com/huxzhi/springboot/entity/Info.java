@@ -68,5 +68,11 @@ public class Info implements Serializable {
 
     @ApiModelProperty("是否外国人")
     private Boolean isForeigner;
-    
+
+    @ApiModelProperty("籍贯")
+    private String hometown;
+
+    @ApiModelProperty("紧急联系人")
+    private String emergency;
+
 }
