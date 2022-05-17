@@ -214,6 +214,7 @@
           <h3>非常抱歉！！！数据库未查到该数据</h3>
         </div>
       </el-collapse-item>
+
       <el-collapse-item title="查看生育记录信息" name="4">
         <template slot="title">
           <h1> 查看生育记录信息</h1><i class="header-icon el-icon-info"></i>
