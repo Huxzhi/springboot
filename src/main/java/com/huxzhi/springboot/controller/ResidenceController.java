@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.huxzhi.springboot.common.Result;
 import com.huxzhi.springboot.entity.Residence;
+import com.huxzhi.springboot.mapper.ResidenceMapper;
 import com.huxzhi.springboot.service.IResidenceService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,16 @@ public class ResidenceController {
 
     @Resource
     private IResidenceService residenceService;
+
+    @Resource
+    private ResidenceMapper residenceMapper;
+
+    //根据暂住证记录反查用户id
+    @GetMapping("/userid")
+    public Result getUserIdByResidence(@RequestParam Integer residenceId) {
+        return Result.success(residenceMapper.getUserIdByResidence(residenceId));
+    }
+
 
     //新增或者更新
     @PostMapping

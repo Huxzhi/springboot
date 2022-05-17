@@ -11,7 +11,7 @@
                 v-model="id"></el-input>
 
 
-      <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
+      <el-button class="ml-5" type="primary" @click="searchId">搜索</el-button>
       <el-button type="warning" @click="reset">重置</el-button>
     </div>
 
@@ -337,7 +337,7 @@ export default {
   name: "My",
   data() {
     return {
-      activeNames: [1],
+      activeNames: ["1"],
       id: "",
       info: "",
       illegals: [],
@@ -371,12 +371,22 @@ export default {
     this.maritals.forEach(row => {
       this.mfs.push({'text': row, 'value': row})
     })
+    console.log(this.$route.query.id)
+    //判断是不是 带参数的路由跳转
+    if (JSON.stringify(this.$route.query) !== "{}") {
+
+      this.id = this.$route.query.id
+      console.log(this.id)
+      this.load()
+      this.activeNames = ["3"];
+    }
+
 
     // this.load()
   },
   methods: {
     handleChange(val) {
-      // console.log(val);
+      console.log(val);
     },
     saveInfo() {
       this.request.get("/bind/saveinfo", {
@@ -389,8 +399,9 @@ export default {
           this.$message.success("绑定成功")
           this.id = this.userId
           this.infoIdDialogFormVisible = false
-          this.activeNames = ['1']
           this.load()
+          this.activeNames = ['1']
+
         } else {
           this.$message.error("错误代码：" + res.code + "\n绑定失败，" + res.msg)
         }
@@ -408,7 +419,7 @@ export default {
           this.id = this.userId
           this.illegalIdDialogFormVisible = false
           this.load()
-          this.activeNames = [2]
+          this.activeNames = ["2"]
         } else {
           this.$message.error("错误代码：" + res.code + "\n绑定失败，" + res.msg)
         }
@@ -426,7 +437,7 @@ export default {
           this.id = this.userId
           this.load()
           this.residencesIdDialogFormVisible = false
-          this.activeNames = [3]
+          this.activeNames = ["3"]
         } else {
           this.$message.error("错误代码：" + res.code + "\n绑定失败，" + res.msg)
         }
@@ -442,7 +453,7 @@ export default {
         if (res.code === '200') {
           this.$message.success("绑定成功")
           this.id = this.userId
-          this.activeNames = [4]
+          this.activeNames = ["4"]
           this.birthsIdDialogFormVisible = false
           this.id = this.userId
           this.load()
@@ -459,7 +470,10 @@ export default {
       this.births = []
       this.activeNames = []
     },
-
+    searchId() {
+      this.load()
+      this.activeNames = ['1'];
+    },
     load() {
       this.request.get("/my", {
         params: {
@@ -470,7 +484,6 @@ export default {
         this.illegals = res.data.illegals
         this.residences = res.data.residences
         this.births = res.data.births
-        this.activeNames = ['1']
 
       })
     }

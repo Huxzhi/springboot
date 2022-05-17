@@ -39,6 +39,17 @@
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
       <el-table-column prop="name" label="姓名" width="80"></el-table-column>
       <el-table-column prop="idCard" label="身份证号" width="150"></el-table-column>
+      <el-table-column label="时效" width="75" align="center">
+        <template slot-scope="scope">
+          <div v-if="Date.parse(scope.row.timeEnd) > new Date()">
+            <el-button type="success">有效</el-button>
+          </div>
+          <div v-else>
+            <el-button type="warning">过期</el-button>
+          </div>
+        </template>
+      </el-table-column>
+
 
       <el-table-column prop="gender" label="性别" width="80"></el-table-column>
       <el-table-column prop="occupation" label="从业学位及职业" width="120"></el-table-column>
@@ -49,7 +60,7 @@
       <el-table-column prop="timeEnd" label="有效日期结束" width="190"></el-table-column>
 
 
-      <el-table-column label="操作" width="200" align="center">
+      <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
           <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
           <el-popconfirm
@@ -63,7 +74,11 @@
           >
             <el-button type="danger" slot="reference">删除 <i class="el-icon-remove-outline"></i></el-button>
           </el-popconfirm>
+          <el-button class="ml-5" type="warning" @click="moreRecord(scope.row.id)">更多 <i
+              class="el-icon-more-outline"></i>
+          </el-button>
         </template>
+
       </el-table-column>
     </el-table>
     <div style="padding: 10px 0">
@@ -186,6 +201,20 @@ export default {
           this.$message.error("删除失败")
         }
       })
+    },
+    moreRecord(id) {
+      console.log(id)
+
+      this.request.get("/residence/userid", {
+        params: {
+          residenceId: id,
+        }
+      }).then(res => {
+        console.log(res)
+        this.$router.push({path: '/bind', query: {id: res.data[0]}})
+      })
+
+
     },
     handleSelectionChange(val) {
       console.log(val)

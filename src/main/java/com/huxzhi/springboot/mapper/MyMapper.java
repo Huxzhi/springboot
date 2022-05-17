@@ -25,7 +25,7 @@ public interface MyMapper {
     @Select("SELECT COUNT( * ) FROM  fp_user_illegal u  LEFT OUTER JOIN fp_illegal r on u.id_illegal =r.id  WHERE r.is_accepted = 0 and u.id_user= #{id_user};")
     Integer selectIllegal(@Param("id_user") Integer id_user);
 
-    //根据用户 Id 查询存在违法记录的条数
+    //根据用户 Id 查询存在违法记录
     @Select("SELECT  *  FROM  fp_user_illegal u  LEFT OUTER JOIN fp_illegal r on u.id_illegal =r.id  WHERE r.is_accepted = 0 and u.id_user= #{id_user};")
     List<Illegal> getUserIllegal(@Param("id_user") Integer id_user);
 
