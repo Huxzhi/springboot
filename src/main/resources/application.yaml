@@ -61,10 +61,6 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #日志
     map-underscore-to-camel-case: true # 开启驼峰命名
 
-files:
-  upload:
-    # path: /Users/huxinzhi/Developer/GitHub/Graduation-Design/files/
-    path: /home/files/
 
 
 # 加密工具（换成java类了，生成一个 jasyptStringEncryptor 组件放入SpringBoot中，在配置类中 JasyptConfig.java）
